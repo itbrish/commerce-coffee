@@ -1,0 +1,25 @@
+{
+  "name": "coffee-commerce-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=@coffee/api\" \"npm run dev --workspace=@coffee/web\" \"npm run dev --workspace=@coffee/admin\"",
+    "dev:api": "npm run dev --workspace=@coffee/api",
+    "dev:web": "npm run dev --workspace=@coffee/web",
+    "dev:admin": "npm run dev --workspace=@coffee/admin",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "db:generate": "npm run db:generate --workspace=@coffee/api",
+    "db:push": "npm run db:push --workspace=@coffee/api",
+    "db:seed": "npm run db:seed --workspace=@coffee/api"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3"
+  }
+}

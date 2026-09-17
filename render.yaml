@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: atelier-coffee-api
+    runtime: node
+    plan: starter
+    buildCommand: npm install && npm --workspace=@coffee/api run db:generate && npm --workspace=@coffee/api run build
+    startCommand: node apps/api/dist/main.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: atelier-coffee-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: NEXT_PUBLIC_STORE_URL
+        value: https://ateliercoffee.co
+      - key: NEXT_PUBLIC_ADMIN_URL
+        value: https://admin.ateliercoffee.co
+      - key: NEXT_PUBLIC_WHATSAPP_NUMBER
+        value: "6281234567890"
+      - key: WHATSAPP_PROVIDER
+        value: meta
+      - key: PAYMENT_PROVIDER
+        value: midtrans
+
+databases:
+  - name: atelier-coffee-db
+    plan: starter
+    databaseName: atelier_commerce
+    user: atelier_admin
