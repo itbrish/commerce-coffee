@@ -74,7 +74,7 @@ export class PaymentsService {
           data: {
             orderId: order.id,
             amount: order.totalAmount,
-            provider: 'MIDTRANS',
+            paymentMethod: 'MIDTRANS',
             transactionId: data.token,
             status: 'PENDING',
             payload: JSON.stringify(data),
