@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, ShieldCheck, Truck, Wrench, Sparkles, Coffee } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Truck, Wrench, Sparkles } from 'lucide-react';
 import { fetchApi } from '../lib/api';
 import { WhatsAppIcon } from '../components/WhatsAppIcon';
 
@@ -41,9 +41,9 @@ export default async function HomePage() {
   const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '6281234567890';
 
   return (
-    <div className="space-y-32 pb-24 overflow-hidden">
-      {/* 1. EDITORIAL HERO (Lifetimedesign.co Aesthetic) */}
-      <section className="relative min-h-[92vh] flex items-center justify-center bg-stone-950 text-cream-50 overflow-hidden">
+    <div className="space-y-16 sm:space-y-24 md:space-y-32 pb-20 sm:pb-24 overflow-hidden">
+      {/* 1. EDITORIAL HERO */}
+      <section className="relative min-h-[85vh] sm:min-h-[92vh] flex items-center justify-center bg-stone-950 text-cream-50 overflow-hidden py-16 sm:py-0">
         {/* Background Image with Cinematic Overlay */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -57,27 +57,27 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/50 to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center space-y-8 animate-fadeIn">
-          <div className="inline-flex items-center space-x-3 border border-[#B58A63]/40 px-5 py-2 bg-stone-900/60 backdrop-blur-md">
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-6 sm:space-y-8 animate-fadeIn">
+          <div className="inline-flex items-center space-x-2 sm:space-x-3 border border-[#B58A63]/40 px-3.5 sm:px-5 py-1.5 sm:py-2 bg-stone-900/60 backdrop-blur-md">
             <span className="w-2 h-2 rounded-full bg-[#B58A63] animate-pulse" />
-            <span className="text-[11px] tracking-[0.35em] uppercase text-stone-200 font-sans font-medium">
+            <span className="text-[9px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.35em] uppercase text-stone-200 font-sans font-medium">
               Italian Architectural Espresso Machines
             </span>
           </div>
 
-          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.08] text-[#FDFBF7] font-normal">
+          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.15] sm:leading-[1.08] text-[#FDFBF7] font-normal">
             Seni & Presisi <br />
             <span className="italic font-light text-[#E8D8C8]">Ekstraksi Sempurna</span>
           </h1>
 
-          <p className="max-w-2xl mx-auto text-sm sm:text-base text-stone-300 font-light leading-relaxed tracking-wide">
+          <p className="max-w-2xl mx-auto text-xs sm:text-base text-stone-300 font-light leading-relaxed tracking-wide px-2">
             Kurasi peralatan espresso kelas dunia dari Florence, Milan, dan Venice. Dirancang untuk kafe terkemuka dan ruang pribadi dengan standar tanpa kompromi.
           </p>
 
-          <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-5">
+          <div className="pt-4 sm:pt-6 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 w-full max-w-md sm:max-w-none mx-auto">
             <Link
               href="/shop"
-              className="w-full sm:w-auto px-10 py-4 bg-[#FDFBF7] text-stone-950 text-xs tracking-[0.25em] uppercase font-medium hover:bg-[#B58A63] hover:text-white transition-all duration-300 shadow-xl"
+              className="w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 bg-[#FDFBF7] text-stone-950 text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase font-medium hover:bg-[#B58A63] hover:text-white transition-all duration-300 shadow-xl text-center"
             >
               Jelajahi Katalog 2026
             </Link>
@@ -85,7 +85,7 @@ export default async function HomePage() {
               href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Atelier du Café, saya ingin konsultasi private pemilihan mesin espresso.')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-8 py-4 border border-[#25D366]/60 hover:border-[#25D366] text-cream-100 hover:text-white text-xs tracking-[0.25em] uppercase font-semibold transition-all backdrop-blur-sm flex items-center justify-center space-x-2.5 bg-stone-900/50 hover:bg-stone-900/80 group"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 border border-[#25D366]/60 hover:border-[#25D366] text-cream-100 hover:text-white text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase font-semibold transition-all backdrop-blur-sm flex items-center justify-center space-x-2.5 bg-stone-900/50 hover:bg-stone-900/80 group"
             >
               <div className="w-4 h-4 group-hover:scale-110 transition-transform">
                 <WhatsAppIcon className="w-4 h-4" color="#25D366" />
@@ -95,66 +95,66 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-2 text-stone-400 opacity-70">
+        {/* Scroll Indicator (Hidden on small phone screens) */}
+        <div className="hidden sm:flex absolute bottom-6 left-1/2 -translate-x-1/2 flex-col items-center space-y-2 text-stone-400 opacity-70">
           <span className="text-[9px] uppercase tracking-[0.3em]">Scroll</span>
-          <div className="w-[1px] h-8 bg-gradient-to-b from-stone-400 to-transparent" />
+          <div className="w-[1px] h-6 bg-gradient-to-b from-stone-400 to-transparent" />
         </div>
       </section>
 
       {/* 2. VALUE PROPOSITION BAR */}
-      <section className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 py-10 border-y border-stone-200">
-          <div className="flex items-start space-x-4">
-            <ShieldCheck className="w-6 h-6 text-[#B58A63] flex-shrink-0 mt-1" />
+      <section className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 py-8 sm:py-10 border-y border-stone-200">
+          <div className="flex items-start space-x-3.5">
+            <ShieldCheck className="w-5 h-5 text-[#B58A63] flex-shrink-0 mt-0.5" />
             <div>
               <h4 className="font-serif text-sm font-semibold text-stone-900 uppercase tracking-wider">Garansi Resmi 2-3 Tahun</h4>
-              <p className="text-xs text-stone-500 font-light mt-1">Jaminan suku cadang original dan teknisi tersertifikasi pabrikan Italia.</p>
+              <p className="text-xs text-stone-500 font-light mt-0.5">Jaminan suku cadang original dan teknisi tersertifikasi pabrikan Italia.</p>
             </div>
           </div>
-          <div className="flex items-start space-x-4">
-            <Truck className="w-6 h-6 text-[#B58A63] flex-shrink-0 mt-1" />
+          <div className="flex items-start space-x-3.5">
+            <Truck className="w-5 h-5 text-[#B58A63] flex-shrink-0 mt-0.5" />
             <div>
               <h4 className="font-serif text-sm font-semibold text-stone-900 uppercase tracking-wider">White-Glove Delivery</h4>
-              <p className="text-xs text-stone-500 font-light mt-1">Pengiriman terlindungi asuransi dan instalasi langsung di lokasi Anda.</p>
+              <p className="text-xs text-stone-500 font-light mt-0.5">Pengiriman terlindungi asuransi dan instalasi langsung di lokasi Anda.</p>
             </div>
           </div>
-          <div className="flex items-start space-x-4">
-            <Wrench className="w-6 h-6 text-[#B58A63] flex-shrink-0 mt-1" />
+          <div className="flex items-start space-x-3.5">
+            <Wrench className="w-5 h-5 text-[#B58A63] flex-shrink-0 mt-0.5" />
             <div>
               <h4 className="font-serif text-sm font-semibold text-stone-900 uppercase tracking-wider">Barista Calibration</h4>
-              <p className="text-xs text-stone-500 font-light mt-1">Kalibrasi profil air, suhu boiler, dan rasio ekstraksi gratis.</p>
+              <p className="text-xs text-stone-500 font-light mt-0.5">Kalibrasi profil air, suhu boiler, dan rasio ekstraksi gratis.</p>
             </div>
           </div>
-          <div className="flex items-start space-x-4">
-            <Sparkles className="w-6 h-6 text-[#B58A63] flex-shrink-0 mt-1" />
+          <div className="flex items-start space-x-3.5">
+            <Sparkles className="w-5 h-5 text-[#B58A63] flex-shrink-0 mt-0.5" />
             <div>
               <h4 className="font-serif text-sm font-semibold text-stone-900 uppercase tracking-wider">Bespoke Customization</h4>
-              <p className="text-xs text-stone-500 font-light mt-1">Kustomisasi warna bodi, panel kayu walnut, dan chrome finishing.</p>
+              <p className="text-xs text-stone-500 font-light mt-0.5">Kustomisasi warna bodi, panel kayu walnut, dan chrome finishing.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. CATEGORIES SHOWCASE (Asymmetrical Grid) */}
-      <section className="max-w-7xl mx-auto px-6 space-y-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-stone-200 pb-6">
-          <div className="space-y-2">
-            <span className="text-[11px] uppercase tracking-[0.3em] text-[#8C827A] font-semibold">Kurasi Berdasarkan Kebutuhan</span>
-            <h2 className="font-serif text-3xl md:text-4xl text-stone-900 font-normal">Kategori Utama</h2>
+      {/* 3. CATEGORIES SHOWCASE */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 space-y-8 sm:space-y-12">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-stone-200 pb-4 sm:pb-6 gap-3">
+          <div className="space-y-1.5">
+            <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-[#8C827A] font-semibold">Kurasi Berdasarkan Kebutuhan</span>
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-stone-900 font-normal">Kategori Utama</h2>
           </div>
-          <Link href="/shop" className="mt-4 md:mt-0 text-xs uppercase tracking-[0.2em] text-stone-800 hover:text-[#B58A63] flex items-center space-x-2 font-medium">
+          <Link href="/shop" className="text-xs uppercase tracking-[0.2em] text-stone-800 hover:text-[#B58A63] flex items-center space-x-2 font-medium">
             <span>Semua Kategori</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {categories.slice(0, 3).map((cat, idx) => (
             <Link
               key={cat.id || idx}
               href={`/shop?category=${cat.slug}`}
-              className="group relative h-[420px] bg-stone-900 overflow-hidden flex flex-col justify-end p-8 text-cream-50"
+              className="group relative h-[340px] sm:h-[420px] bg-stone-900 overflow-hidden flex flex-col justify-end p-6 sm:p-8 text-cream-50"
             >
               <Image
                 src={cat.imageUrl || 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?q=80&w=1000&auto=format&fit=crop'}
@@ -166,9 +166,9 @@ export default async function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent" />
               <div className="relative z-10 space-y-2">
                 <span className="text-[10px] uppercase tracking-[0.3em] text-[#B58A63] font-medium">Koleksi Spesialis</span>
-                <h3 className="font-serif text-2xl group-hover:translate-x-1 transition-transform">{cat.name}</h3>
+                <h3 className="font-serif text-xl sm:text-2xl group-hover:translate-x-1 transition-transform">{cat.name}</h3>
                 <p className="text-xs text-stone-300 font-light line-clamp-2">{cat.description}</p>
-                <div className="pt-2 flex items-center space-x-2 text-xs uppercase tracking-widest text-[#E8D8C8]">
+                <div className="pt-1.5 flex items-center space-x-2 text-xs uppercase tracking-widest text-[#E8D8C8]">
                   <span>Lihat Mesin</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -178,30 +178,30 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 4. FEATURED PRODUCTS (Editorial Magazine Style) */}
-      <section className="max-w-7xl mx-auto px-6 space-y-12">
-        <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <span className="text-[11px] uppercase tracking-[0.3em] text-[#8C827A] font-semibold">Masterpieces of Engineering</span>
-          <h2 className="font-serif text-3xl md:text-5xl text-stone-900 font-normal">Mesin Espresso Unggulan</h2>
+      {/* 4. FEATURED PRODUCTS */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 space-y-8 sm:space-y-12">
+        <div className="text-center space-y-2.5 max-w-2xl mx-auto">
+          <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-[#8C827A] font-semibold">Masterpieces of Engineering</span>
+          <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl text-stone-900 font-normal">Mesin Espresso Unggulan</h2>
           <p className="text-xs sm:text-sm text-stone-500 font-light">
             Setiap unit dipilih berdasarkan kestabilan termal, material premium, dan reputasi di panggung kejuaraan barista global.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10">
           {featuredProducts.map((prod) => {
             const primaryImg = prod.images?.find((img: any) => img.isPrimary)?.url || prod.images?.[0]?.url || 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?q=80&w=1000';
             return (
               <div
                 key={prod.id}
-                className="group flex flex-col bg-[#FAF7F2] border border-[#EAE6DF] hover:border-stone-400 transition-all duration-300 p-6 space-y-6"
+                className="group flex flex-col bg-[#FAF7F2] border border-[#EAE6DF] hover:border-stone-400 transition-all duration-300 p-4 sm:p-6 space-y-4 sm:space-y-6"
               >
-                <Link href={`/product/${prod.slug}`} className="relative h-72 w-full bg-white flex items-center justify-center overflow-hidden border border-stone-100">
+                <Link href={`/product/${prod.slug}`} className="relative h-60 sm:h-72 w-full bg-white flex items-center justify-center overflow-hidden border border-stone-100">
                   <Image
                     src={primaryImg}
                     alt={prod.name}
                     fill
-                    className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                    className="object-contain p-4 sm:p-6 group-hover:scale-105 transition-transform duration-500"
                     unoptimized
                   />
                   {prod.newArrival && (
@@ -217,16 +217,16 @@ export default async function HomePage() {
                       {prod.brand?.name || 'Handcrafted in Italy'}
                     </span>
                     <Link href={`/product/${prod.slug}`}>
-                      <h3 className="font-serif text-lg text-stone-900 hover:text-[#B58A63] transition-colors line-clamp-1 mt-1 font-normal">
+                      <h3 className="font-serif text-base sm:text-lg text-stone-900 hover:text-[#B58A63] transition-colors line-clamp-1 mt-1 font-normal">
                         {prod.name}
                       </h3>
                     </Link>
-                    <p className="text-xs text-stone-500 font-light line-clamp-2 mt-2 leading-relaxed">
+                    <p className="text-xs text-stone-500 font-light line-clamp-2 mt-1.5 leading-relaxed">
                       {prod.shortDescription || prod.description}
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-stone-200/80 flex items-baseline justify-between">
+                  <div className="pt-3 sm:pt-4 border-t border-stone-200/80 flex items-baseline justify-between">
                     <div>
                       <span className="text-[10px] uppercase tracking-wider text-stone-400 block font-medium">Harga Investasi</span>
                       <span className="font-price text-base md:text-lg font-bold text-stone-900 tracking-tight">
@@ -248,10 +248,10 @@ export default async function HomePage() {
           })}
         </div>
 
-        <div className="text-center pt-6">
+        <div className="text-center pt-4 sm:pt-6">
           <Link
             href="/shop"
-            className="inline-block px-12 py-4 border border-stone-900 text-stone-900 text-xs tracking-[0.25em] uppercase font-medium hover:bg-stone-900 hover:text-white transition-colors"
+            className="inline-block w-full sm:w-auto px-8 sm:px-12 py-3.5 sm:py-4 border border-stone-900 text-stone-900 text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase font-medium hover:bg-stone-900 hover:text-white transition-colors"
           >
             Lihat Seluruh Koleksi Mesin
           </Link>
@@ -259,27 +259,27 @@ export default async function HomePage() {
       </section>
 
       {/* 5. EDITORIAL STORY SECTION */}
-      <section className="bg-[#24211E] text-cream-50 py-24">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-6">
-            <span className="text-[11px] uppercase tracking-[0.35em] text-[#B58A63] font-medium">Philosophy of Craft</span>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal leading-tight">
+      <section className="bg-[#24211E] text-cream-50 py-16 sm:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-center">
+          <div className="space-y-4 sm:space-y-6 order-2 lg:order-1">
+            <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.35em] text-[#B58A63] font-medium">Philosophy of Craft</span>
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-5xl font-normal leading-tight">
               Bukan Sekadar Mesin,<br />
               <span className="italic text-[#E8D8C8]">Sebuah Mahakarya Presisi</span>
             </h2>
-            <p className="text-sm font-light text-stone-300 leading-relaxed">
+            <p className="text-xs sm:text-sm font-light text-stone-300 leading-relaxed">
               Di Atelier du Café, kami percaya bahwa setiap cangkir espresso adalah hasil sinergi antara sains termal, tekanan hidrolik yang terkalibrasi, dan sentuhan jiwa sang barista.
             </p>
-            <p className="text-sm font-light text-stone-300 leading-relaxed">
+            <p className="text-xs sm:text-sm font-light text-stone-300 leading-relaxed">
               Kami bermitra langsung dengan manufaktur ikonik dunia untuk menghadirkan teknologi dual boiler, digital PID terisolasi, serta rotary pump bertekanan stabil langsung ke bar Anda.
             </p>
 
-            <div className="pt-4">
+            <div className="pt-2 sm:pt-4">
               <a
                 href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Atelier du Café, saya ingin konsultasi pemilihan mesin untuk kafe saya.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-3 px-8 py-4 bg-[#25D366] hover:bg-emerald-600 text-white text-xs tracking-widest uppercase font-bold transition-all shadow-lg group"
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-[#25D366] hover:bg-emerald-600 text-white text-xs tracking-widest uppercase font-bold transition-all shadow-lg group"
               >
                 <div className="w-5 h-5 group-hover:scale-110 transition-transform">
                   <WhatsAppIcon className="w-5 h-5" color="#ffffff" />
@@ -289,7 +289,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="relative h-[480px] bg-stone-900 border border-stone-700 overflow-hidden">
+          <div className="relative h-64 sm:h-96 lg:h-[480px] bg-stone-900 border border-stone-700 overflow-hidden order-1 lg:order-2">
             <Image
               src="https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1000&auto=format&fit=crop"
               alt="Artisanal Espresso Preparation"

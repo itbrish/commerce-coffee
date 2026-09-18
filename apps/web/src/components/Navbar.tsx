@@ -24,24 +24,25 @@ export function Navbar() {
     e.preventDefault();
     if (searchQuery.trim()) {
       router.push(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+      setMobileMenuOpen(false);
     }
   };
 
   return (
     <header className="sticky top-0 z-40 bg-[#FDFBF7]/95 backdrop-blur-md border-b border-[#EAE7E1] transition-all">
       {/* Top Banner / Showroom Concierge Note */}
-      <div className="bg-[#1C1A19] text-[#E8D8C8] text-[11px] tracking-[0.25em] uppercase py-1.5 px-6 text-center font-sans flex items-center justify-center space-x-2">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse" />
-        <span>Official Italian Haute Espresso Equipment • White-Glove Dispatch</span>
+      <div className="bg-[#1C1A19] text-[#E8D8C8] text-[9px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.25em] uppercase py-1.5 px-4 text-center font-sans flex items-center justify-center space-x-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse shrink-0" />
+        <span className="truncate">Official Italian Haute Espresso Equipment • White-Glove Dispatch</span>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-6">
         {/* Mobile Menu Button */}
-        <div className="flex items-center lg:hidden">
+        <div className="flex items-center xl:hidden">
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="text-stone-800 hover:text-stone-950 p-2"
+            className="text-stone-800 hover:text-stone-950 p-2 -ml-2 rounded-lg active:bg-stone-200"
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -51,10 +52,10 @@ export function Navbar() {
         {/* 1. Left Section: Brand Logo & Main Nav */}
         <div className="flex items-center space-x-8">
           <Link href="/" className="inline-block shrink-0">
-            <span className="font-serif text-2xl md:text-3xl tracking-wider text-stone-900 font-normal block uppercase">
+            <span className="font-serif text-xl sm:text-2xl md:text-3xl tracking-wider text-stone-900 font-normal block uppercase">
               Atelier du Café
             </span>
-            <span className="text-[9px] tracking-[0.35em] text-[#8C827A] uppercase font-sans block -mt-1">
+            <span className="text-[8px] sm:text-[9px] tracking-[0.3em] sm:tracking-[0.35em] text-[#8C827A] uppercase font-sans block -mt-1">
               Haute Espresso Equipment
             </span>
           </Link>
@@ -67,7 +68,7 @@ export function Navbar() {
           </nav>
         </div>
 
-        {/* 2. Center Section: PENCARIAN DI TENGAH (Prominent Centered Search Bar) */}
+        {/* 2. Center Section: PENCARIAN DI TENGAH (Desktop & Tablet) */}
         <div className="hidden md:flex flex-1 max-w-md mx-auto">
           <form onSubmit={handleSearch} className="w-full relative flex items-center">
             <input
@@ -90,8 +91,8 @@ export function Navbar() {
           </form>
         </div>
 
-        {/* 3. Right Section: WhatsApp Asli + Compare + Cart */}
-        <div className="flex items-center space-x-4 sm:space-x-5 text-stone-800 shrink-0">
+        {/* 3. Right Section: WhatsApp + Compare + Cart */}
+        <div className="flex items-center space-x-2 sm:space-x-4 text-stone-800 shrink-0">
           {/* Compare Trigger */}
           {compareCount > 0 && (
             <button
@@ -101,22 +102,22 @@ export function Navbar() {
               title="Bandingkan Mesin"
             >
               <Scale className="w-5 h-5 stroke-[1.5]" />
-              <span className="hidden md:inline text-[11px]">({compareCount})</span>
+              <span className="hidden sm:inline text-[11px]">({compareCount})</span>
             </button>
           )}
 
-          {/* OFFICIAL WHATSAPP VIP CONCIERGE BUTTON (Logo Asli WhatsApp) */}
+          {/* OFFICIAL WHATSAPP VIP CONCIERGE BUTTON */}
           <a
             href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Atelier du Café, saya ingin konsultasi pemilihan mesin kopi premium.')}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center space-x-2.5 bg-[#2C2825] hover:bg-stone-950 text-cream-50 px-4 py-2.5 rounded-none border border-stone-800 transition-all duration-300 shadow-md group"
+            className="flex items-center space-x-2 bg-[#2C2825] hover:bg-stone-950 text-cream-50 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-none border border-stone-800 transition-all duration-300 shadow-md group"
             title="Chat Official WhatsApp VIP Concierge"
           >
             <div className="w-5 h-5 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-              <WhatsAppIcon className="w-5 h-5" color="#25D366" />
+              <WhatsAppIcon className="w-4 h-4 sm:w-5 sm:h-5" color="#25D366" />
             </div>
-            <div className="text-left hidden sm:block">
+            <div className="text-left hidden lg:block">
               <span className="text-[11px] tracking-[0.2em] uppercase font-semibold block text-white leading-none">
                 WhatsApp VIP
               </span>
@@ -130,12 +131,12 @@ export function Navbar() {
           <button
             type="button"
             onClick={openCart}
-            className="relative p-2.5 hover:text-stone-950 transition-colors border border-transparent hover:border-stone-300"
+            className="relative p-2 sm:p-2.5 hover:text-stone-950 transition-colors border border-transparent hover:border-stone-300 active:scale-95"
             aria-label="Shopping Bag"
           >
             <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
             {totalCartItems > 0 && (
-              <span className="absolute top-1 right-0 bg-[#B58A63] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+              <span className="absolute top-0 right-0 sm:top-1 sm:right-0 bg-[#B58A63] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
                 {totalCartItems}
               </span>
             )}
@@ -143,12 +144,12 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Search Bar (Below Header on Small Screens) */}
-      <div className="md:hidden px-6 pb-3 pt-1 border-t border-stone-200/60 bg-[#FAF7F2]">
+      {/* Mobile Search Bar (Directly below header on small mobile screens) */}
+      <div className="md:hidden px-4 pb-3 pt-1 border-t border-stone-200/60 bg-[#FAF7F2]">
         <form onSubmit={handleSearch} className="relative flex items-center">
           <input
             type="text"
-            placeholder="Cari mesin espresso, grinder, brand..."
+            placeholder="Cari mesin, grinder, brand..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-white border border-stone-300 rounded-none pl-9 pr-8 py-2 text-xs text-stone-900 placeholder:text-stone-400 focus:outline-none focus:border-stone-900"
@@ -158,7 +159,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setSearchQuery('')}
-              className="absolute right-2.5 text-stone-400 hover:text-stone-700"
+              className="absolute right-2.5 text-stone-400 hover:text-stone-700 p-1"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -168,13 +169,13 @@ export function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-stone-200 bg-[#FDFBF7] px-6 py-6 space-y-5 animate-fadeIn">
-          <nav className="flex flex-col space-y-4 text-sm tracking-[0.2em] uppercase font-medium text-stone-800">
-            <Link href="/shop" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#B58A63]">Semua Koleksi Mesin</Link>
-            <Link href="/shop?category=espresso-commercial" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#B58A63]">Commercial Machines</Link>
-            <Link href="/shop?category=espresso-home" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#B58A63]">Home Espresso Atelier</Link>
-            <Link href="/shop?category=grinders" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#B58A63]">Precision Grinders</Link>
-            <Link href="/shop?category=accessories" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#B58A63]">Accessories & Tools</Link>
+        <div className="xl:hidden border-t border-stone-200 bg-[#FDFBF7] px-6 py-6 space-y-5 animate-fadeIn shadow-2xl">
+          <nav className="flex flex-col space-y-3.5 text-xs tracking-[0.2em] uppercase font-semibold text-stone-800">
+            <Link href="/shop" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Semua Koleksi Mesin</Link>
+            <Link href="/shop?category=espresso-commercial" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Commercial Machines</Link>
+            <Link href="/shop?category=espresso-home" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Home Espresso Atelier</Link>
+            <Link href="/shop?category=grinders" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Precision Grinders</Link>
+            <Link href="/shop?category=accessories" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Accessories & Tools</Link>
           </nav>
 
           <div className="pt-4 border-t border-stone-200">
@@ -182,9 +183,9 @@ export function Navbar() {
               href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Atelier du Café, saya ingin konsultasi mesin kopi.')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center space-x-3 bg-[#25D366] hover:bg-emerald-600 text-white py-3.5 text-xs tracking-widest uppercase font-bold shadow transition-colors"
+              className="w-full flex items-center justify-center space-x-2.5 bg-[#25D366] hover:bg-emerald-600 text-white py-3 text-xs tracking-widest uppercase font-bold shadow transition-colors"
             >
-              <WhatsAppIcon className="w-5 h-5 text-white" color="#ffffff" />
+              <WhatsAppIcon className="w-4 h-4 text-white" color="#ffffff" />
               <span>Konsultasi WhatsApp VIP</span>
             </a>
           </div>

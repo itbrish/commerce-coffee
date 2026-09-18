@@ -1,35 +1,25 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Filter, X } from 'lucide-react';
 import { fetchApi } from '../../lib/api';
 
-interface ShopProps {
-  searchParams: {
-    category?: string;
-    brand?: string;
-    search?: string;
-    sort?: string;
-  };
-}
-
-async function getProducts(searchParams: ShopProps['searchParams']) {
+async function getProducts(searchParams: { category?: string; brand?: string; search?: string }) {
   try {
-    const params = new URLSearchParams();
-    if (searchParams.category) params.set('category', searchParams.category);
-    if (searchParams.brand) params.set('brand', searchParams.brand);
-    if (searchParams.search) params.set('search', searchParams.search);
-    if (searchParams.sort) params.set('sort', searchParams.sort);
-    params.set('limit', '50');
+    const query = new URLSearchParams();
+    if (searchParams.category) query.append('category', searchParams.category);
+    if (searchParams.brand) query.append('brand', searchParams.brand);
+    if (searchParams.search) query.append('search', searchParams.search);
+    query.append('limit', '50');
 
-    const res = await fetchApi<{ success: boolean; data: any }>(`products?${params.toString()}`);
-    let items: any[] = [];
+    const res = await fetchApi<{ success: boolean; data: any }>(`products?${query.toString()}`);
     if (Array.isArray(res.data)) {
-      items = res.data;
-    } else if (res.data && Array.isArray(res.data.items)) {
-      items = res.data.items;
+      return { items: res.data, total: res.data.length };
     }
-    return { items, total: items.length };
+    if (res.data && Array.isArray(res.data.items)) {
+      return { items: res.data.items, total: res.data.total || res.data.items.length };
+    }
+    return { items: [], total: 0 };
   } catch (err) {
     console.error('Error fetching products:', err);
     return { items: [], total: 0 };
@@ -47,11 +37,16 @@ async function getFilters() {
       brands: Array.isArray(brandRes.data) ? brandRes.data : [],
     };
   } catch (err) {
+    console.error('Error fetching filters:', err);
     return { categories: [], brands: [] };
   }
 }
 
-export default async function ShopPage({ searchParams }: ShopProps) {
+export default async function ShopPage({
+  searchParams,
+}: {
+  searchParams: { category?: string; brand?: string; search?: string };
+}) {
   const [data, filters] = await Promise.all([
     getProducts(searchParams),
     getFilters(),
@@ -62,14 +57,16 @@ export default async function ShopPage({ searchParams }: ShopProps) {
     return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val || 0);
   };
 
+  const activeFiltersCount = [searchParams.category, searchParams.brand, searchParams.search].filter(Boolean).length;
+
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8 sm:space-y-12">
       {/* Page Header */}
-      <div className="border-b border-stone-200 pb-8 space-y-3">
-        <span className="text-[11px] uppercase tracking-[0.3em] text-[#8C827A] font-semibold">
+      <div className="border-b border-stone-200 pb-6 sm:pb-8 space-y-2 sm:space-y-3">
+        <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-[#8C827A] font-semibold">
           Curated Catalog 2026
         </span>
-        <h1 className="font-serif text-3xl sm:text-5xl text-stone-900 font-normal">
+        <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl text-stone-900 font-normal">
           Koleksi Mesin & Peralatan Kopi
         </h1>
         <p className="text-xs sm:text-sm text-stone-500 font-light max-w-2xl">
@@ -77,9 +74,54 @@ export default async function ShopPage({ searchParams }: ShopProps) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-        {/* Left Sidebar Filters */}
-        <aside className="lg:col-span-1 space-y-8">
+      {/* MOBILE HORIZONTAL FILTER CHIPS (Quick scrollable pill tags for Android & iPhone) */}
+      <div className="lg:hidden space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-stone-700 flex items-center space-x-1.5">
+            <Filter className="w-3.5 h-3.5 text-[#B58A63]" />
+            <span>Filter Cepat Kategori:</span>
+          </span>
+          {activeFiltersCount > 0 && (
+            <Link
+              href="/shop"
+              className="text-[11px] text-red-700 uppercase tracking-wider underline flex items-center space-x-1 font-medium"
+            >
+              <X className="w-3 h-3" />
+              <span>Reset</span>
+            </Link>
+          )}
+        </div>
+
+        <div className="flex items-center space-x-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-none no-scrollbar">
+          <Link
+            href="/shop"
+            className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium border transition ${
+              !searchParams.category
+                ? 'bg-stone-900 text-cream-50 border-stone-900 shadow-sm'
+                : 'bg-white text-stone-700 border-stone-300 hover:border-stone-500'
+            }`}
+          >
+            Semua
+          </Link>
+          {filters.categories.map((c) => (
+            <Link
+              key={c.id}
+              href={`/shop?category=${c.slug}${searchParams.brand ? `&brand=${searchParams.brand}` : ''}`}
+              className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium border transition ${
+                searchParams.category === c.slug
+                  ? 'bg-[#B58A63] text-white border-[#B58A63] shadow-sm'
+                  : 'bg-white text-stone-700 border-stone-300 hover:border-stone-500'
+              }`}
+            >
+              {c.name}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12">
+        {/* Left Sidebar Filters (Desktop) */}
+        <aside className="hidden lg:block lg:col-span-1 space-y-8">
           {/* Categories */}
           <div className="space-y-4">
             <h3 className="font-serif text-sm font-semibold uppercase tracking-wider text-stone-900 border-b border-stone-200 pb-2">
@@ -123,7 +165,7 @@ export default async function ShopPage({ searchParams }: ShopProps) {
           </div>
 
           {/* Active Filter Clear */}
-          {(searchParams.category || searchParams.brand || searchParams.search) && (
+          {activeFiltersCount > 0 && (
             <div className="pt-4">
               <Link
                 href="/shop"
@@ -138,24 +180,24 @@ export default async function ShopPage({ searchParams }: ShopProps) {
         {/* Product Grid */}
         <div className="lg:col-span-3">
           {data.items.length === 0 ? (
-            <div className="text-center py-24 space-y-4 border border-stone-200 p-8 bg-[#FAF6ED]">
-              <p className="font-serif text-lg text-stone-700">Tidak ada mesin kopi yang sesuai dengan filter Anda.</p>
+            <div className="text-center py-20 sm:py-24 space-y-4 border border-stone-200 p-6 sm:p-8 bg-[#FAF6ED]">
+              <p className="font-serif text-base sm:text-lg text-stone-700">Tidak ada mesin kopi yang sesuai dengan filter Anda.</p>
               <p className="text-xs text-stone-500 font-light">Coba ubah kata kunci pencarian atau reset filter.</p>
-              <Link href="/shop" className="inline-block mt-4 text-xs uppercase tracking-widest underline text-stone-900">
+              <Link href="/shop" className="inline-block mt-4 text-xs uppercase tracking-widest underline text-stone-900 font-medium">
                 Lihat Seluruh Mesin
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {data.items.map((prod) => {
                 const primaryImg = prod.images?.find((img: any) => img.isPrimary)?.url || prod.images?.[0]?.url || 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?q=80&w=1000';
                 return (
                   <div
                     key={prod.id}
-                    className="group bg-[#FAF7F2] border border-[#EAE6DF] hover:border-stone-400 transition-all duration-300 p-5 flex flex-col justify-between"
+                    className="group bg-[#FAF7F2] border border-[#EAE6DF] hover:border-stone-400 transition-all duration-300 p-4 sm:p-5 flex flex-col justify-between"
                   >
                     <div>
-                      <Link href={`/product/${prod.slug}`} className="relative h-60 w-full bg-white flex items-center justify-center overflow-hidden border border-stone-100 block">
+                      <Link href={`/product/${prod.slug}`} className="relative h-56 sm:h-60 w-full bg-white flex items-center justify-center overflow-hidden border border-stone-100 block">
                         <Image
                           src={primaryImg}
                           alt={prod.name}
@@ -170,12 +212,12 @@ export default async function ShopPage({ searchParams }: ShopProps) {
                         )}
                       </Link>
 
-                      <div className="mt-4 space-y-2">
+                      <div className="mt-4 space-y-1.5 sm:space-y-2">
                         <span className="text-[10px] uppercase tracking-widest text-[#8C827A] font-medium block">
                           {prod.brand?.name || 'Artisanal'}
                         </span>
                         <Link href={`/product/${prod.slug}`}>
-                          <h3 className="font-serif text-base text-stone-900 hover:text-[#B58A63] transition-colors font-medium line-clamp-1">
+                          <h3 className="font-serif text-sm sm:text-base text-stone-900 hover:text-[#B58A63] transition-colors font-medium line-clamp-1">
                             {prod.name}
                           </h3>
                         </Link>
@@ -185,9 +227,9 @@ export default async function ShopPage({ searchParams }: ShopProps) {
                       </div>
                     </div>
 
-                    <div className="pt-4 mt-4 border-t border-stone-200 flex items-baseline justify-between">
+                    <div className="pt-3 sm:pt-4 mt-3 sm:mt-4 border-t border-stone-200 flex items-baseline justify-between">
                       <div>
-                        <span className="font-price text-sm md:text-base font-bold text-stone-900 tracking-tight">
+                        <span className="font-price text-sm sm:text-base font-bold text-stone-900 tracking-tight">
                           {formatRupiah(prod.price)}
                         </span>
                       </div>

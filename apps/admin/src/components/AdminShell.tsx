@@ -20,12 +20,15 @@ import {
   ShieldCheck,
   AlertCircle,
   Sparkles,
-  ExternalLink
+  ExternalLink,
+  Menu,
+  X
 } from 'lucide-react';
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const { user, isLoading, login, logout } = useAuth();
   const pathname = usePathname();
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   // Login form state
   const [email, setEmail] = useState('');
@@ -56,9 +59,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   // 1. LOADING STATE
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center space-y-4">
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center space-y-4 p-4">
         <div className="w-12 h-12 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin" />
-        <p className="text-xs text-slate-400 font-mono tracking-wider uppercase">
+        <p className="text-xs text-slate-400 font-mono tracking-wider uppercase text-center">
           Memeriksa Sesi Otoritas...
         </p>
       </div>
@@ -68,36 +71,36 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   // 2. UNATHENTICATED STATE: LUXURY EXECUTIVE LOGIN SCREEN
   if (!user) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center p-4 relative overflow-hidden font-sans">
+      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center p-4 sm:p-6 relative overflow-hidden font-sans">
         {/* Ambient background glows */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-10 right-10 w-72 h-72 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-96 h-80 sm:h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-10 right-10 w-60 sm:w-72 h-60 sm:h-72 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
 
-        <div className="w-full max-w-md relative z-10 space-y-6">
+        <div className="w-full max-w-md relative z-10 space-y-5 sm:space-y-6">
           {/* Brand Header */}
           <div className="text-center space-y-2">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 font-bold text-2xl shadow-xl shadow-amber-500/20 mb-2">
+            <div className="inline-flex items-center justify-center w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 font-bold text-xl sm:text-2xl shadow-xl shadow-amber-500/20 mb-1 sm:mb-2">
               A
             </div>
-            <h1 className="text-xl font-bold tracking-widest uppercase text-white">
+            <h1 className="text-lg sm:text-xl font-bold tracking-widest uppercase text-white">
               ATELIER DU CAFÉ
             </h1>
-            <p className="text-xs text-amber-400/90 font-mono uppercase tracking-wider">
+            <p className="text-[10px] sm:text-xs text-amber-400/90 font-mono uppercase tracking-wider">
               Executive Operations Portal
             </p>
           </div>
 
           {/* Login Card */}
-          <div className="bg-slate-900/90 backdrop-blur-md border border-slate-800 p-8 rounded-2xl shadow-2xl space-y-6">
-            <div className="border-b border-slate-800 pb-4">
-              <h2 className="text-base font-semibold text-white">Autentikasi Akses Internal</h2>
+          <div className="bg-slate-900/90 backdrop-blur-md border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl space-y-5 sm:space-y-6">
+            <div className="border-b border-slate-800 pb-3 sm:pb-4">
+              <h2 className="text-sm sm:text-base font-semibold text-white">Autentikasi Akses Internal</h2>
               <p className="text-xs text-slate-400 mt-0.5">
                 Masukkan kredensial resmi untuk mengelola katalog, order, dan inventaris.
               </p>
             </div>
 
             {errorMessage && (
-              <div className="p-3.5 bg-rose-950/70 border border-rose-800/80 rounded-lg text-rose-300 text-xs flex items-start space-x-2.5 animate-fadeIn">
+              <div className="p-3 bg-rose-950/70 border border-rose-800/80 rounded-lg text-rose-300 text-xs flex items-start space-x-2.5 animate-fadeIn">
                 <AlertCircle size={16} className="text-rose-400 shrink-0 mt-0.5" />
                 <span>{errorMessage}</span>
               </div>
@@ -153,7 +156,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                     defaultChecked
                     className="rounded border-slate-700 bg-slate-950 text-amber-500 focus:ring-amber-500"
                   />
-                  <span>Ingat sesi di perangkat ini</span>
+                  <span>Ingat sesi perangkat</span>
                 </label>
               </div>
 
@@ -187,13 +190,13 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-amber-400 text-[11px] font-mono border border-slate-700 transition"
               >
                 <Sparkles size={13} />
-                <span>Isi: admin@ateliercoffee.com (Pass: admin12345)</span>
+                <span>Isi: admin@ateliercoffee.com</span>
               </button>
             </div>
           </div>
 
           {/* Footer note */}
-          <div className="text-center text-[11px] text-slate-400 space-y-1">
+          <div className="text-center text-[10px] sm:text-[11px] text-slate-400 space-y-1">
             <p>Atelier du Café Indonesia • Protected Enterprise Infrastructure</p>
             <p className="text-[10px] text-slate-400">
               Akses khusus staff yang memiliki wewenang operasional.
@@ -216,18 +219,64 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <div className="bg-slate-950 text-slate-100 min-h-screen flex font-sans w-full">
-      {/* Sidebar */}
-      <aside className="w-64 bg-slate-900 border-r border-slate-800 p-6 flex flex-col justify-between shrink-0">
-        <div className="space-y-8">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded bg-amber-500 flex items-center justify-center font-bold text-slate-950">
+    <div className="bg-slate-950 text-slate-100 min-h-screen flex flex-col md:flex-row font-sans w-full overflow-x-hidden">
+      {/* Mobile Top Header */}
+      <header className="md:hidden h-14 bg-slate-900 border-b border-slate-800 px-4 flex items-center justify-between shrink-0 sticky top-0 z-30">
+        <div className="flex items-center space-x-3">
+          <button
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+            className="p-1.5 text-slate-300 hover:text-white rounded-lg active:bg-slate-800"
+            aria-label="Toggle Menu"
+          >
+            {mobileSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+          <div className="flex items-center space-x-2">
+            <div className="w-6 h-6 rounded bg-amber-500 flex items-center justify-center font-bold text-slate-950 text-xs">
               A
             </div>
-            <div>
-              <h1 className="font-bold text-sm tracking-wider uppercase text-white">Atelier Admin</h1>
-              <p className="text-[10px] text-slate-400">Operations Control</p>
+            <span className="font-bold text-xs uppercase text-white tracking-wider">Atelier Admin</span>
+          </div>
+        </div>
+
+        <button
+          onClick={logout}
+          className="text-[11px] text-slate-400 hover:text-rose-400 px-2.5 py-1 rounded border border-slate-700 active:bg-slate-800 transition"
+        >
+          Logout
+        </button>
+      </header>
+
+      {/* Mobile Sidebar Overlay Backdrop */}
+      {mobileSidebarOpen && (
+        <div
+          onClick={() => setMobileSidebarOpen(false)}
+          className="md:hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-40 animate-fadeIn"
+        />
+      )}
+
+      {/* Sidebar (Drawer on mobile, Fixed side column on desktop) */}
+      <aside
+        className={`fixed md:static inset-y-0 left-0 z-50 w-72 md:w-64 bg-slate-900 border-r border-slate-800 p-6 flex flex-col justify-between shrink-0 transform transition-transform duration-300 ease-in-out md:transform-none ${
+          mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+        }`}
+      >
+        <div className="space-y-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 rounded bg-amber-500 flex items-center justify-center font-bold text-slate-950">
+                A
+              </div>
+              <div>
+                <h1 className="font-bold text-sm tracking-wider uppercase text-white">Atelier Admin</h1>
+                <p className="text-[10px] text-slate-400">Operations Control</p>
+              </div>
             </div>
+            <button
+              onClick={() => setMobileSidebarOpen(false)}
+              className="md:hidden p-1.5 text-slate-400 hover:text-white rounded-lg active:bg-slate-800"
+            >
+              <X size={18} />
+            </button>
           </div>
 
           <nav className="space-y-1.5 text-xs font-medium">
@@ -238,6 +287,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={() => setMobileSidebarOpen(false)}
                   className={`flex items-center space-x-3 px-3 py-2.5 rounded transition ${
                     isActive
                       ? 'bg-slate-800 text-white font-semibold border-l-2 border-amber-400'
@@ -292,7 +342,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-16 bg-slate-900/80 backdrop-blur-sm border-b border-slate-800 px-8 flex items-center justify-between">
+        <header className="hidden md:flex h-16 bg-slate-900/80 backdrop-blur-sm border-b border-slate-800 px-8 items-center justify-between shrink-0">
           <div className="text-xs text-slate-400 flex items-center space-x-2">
             <span>Server:</span>
             <span className="text-amber-400 font-mono">Ready & Authenticated</span>
@@ -301,7 +351,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <span className="inline-flex items-center px-2.5 py-1 rounded text-[10px] font-semibold bg-emerald-950 text-emerald-300 border border-emerald-800">
               ● API Live
             </span>
-            <div className="text-slate-400 text-xs hidden sm:block">
+            <div className="text-slate-400 text-xs hidden lg:block">
               Masuk sebagai <strong className="text-white">{user.email}</strong>
             </div>
             <button
@@ -313,7 +363,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        <main className="flex-1 p-8 overflow-y-auto">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
           {children}
         </main>
       </div>

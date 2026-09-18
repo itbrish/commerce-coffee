@@ -3,12 +3,22 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+  }
+
   body {
     background-color: #FDFBF7;
     color: #1A1918;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
   }
 
   h1, h2, h3, h4, .font-editorial {
@@ -22,6 +32,20 @@
     font-feature-settings: "tnum" 1;
     letter-spacing: -0.015em;
   }
+}
+
+/* iOS Safe Area Utilities */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.pl-safe {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+.pr-safe {
+  padding-right: env(safe-area-inset-right, 0px);
 }
 
 /* Custom Luxury Scrollbar */

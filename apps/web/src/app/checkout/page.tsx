@@ -117,7 +117,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12 space-y-6 sm:space-y-10">
       <div className="flex items-center space-x-3 text-xs uppercase tracking-widest text-stone-500">
         <Link href="/shop" className="hover:text-stone-900 flex items-center space-x-1">
           <ArrowLeft className="w-3.5 h-3.5" />
@@ -125,8 +125,8 @@ export default function CheckoutPage() {
         </Link>
       </div>
 
-      <div className="border-b border-stone-200 pb-6">
-        <h1 className="font-serif text-3xl sm:text-4xl text-stone-900 font-normal">
+      <div className="border-b border-stone-200 pb-4 sm:pb-6">
+        <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl text-stone-900 font-normal">
           Checkout & Pemesanan Resmi
         </h1>
         <p className="text-xs sm:text-sm text-stone-500 font-light mt-1">
@@ -135,12 +135,12 @@ export default function CheckoutPage() {
       </div>
 
       {errorMsg && (
-        <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs tracking-wide">
+        <div className="p-3.5 sm:p-4 bg-red-50 border border-red-200 text-red-700 text-xs tracking-wide">
           {errorMsg}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
         {/* Form Fields (7 cols) */}
         <div className="lg:col-span-7 space-y-8">
           {/* Customer Details */}
