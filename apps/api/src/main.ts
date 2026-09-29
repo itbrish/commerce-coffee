@@ -1,4 +1,4 @@
-﻿import { NestFactory } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
@@ -9,8 +9,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.setGlobalPrefix('api/v1');
+  // Enable CORS for localhost and any local network IP (Android / iPhone / LAN devices)
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000', 'http://127.0.0.1:3001'],
+    origin: true,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   });
@@ -36,8 +37,9 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, document);
 
   const port = process.env.PORT || 4000;
-  await app.listen(port);
-  console.log('AURA Coffee API is running on: http://localhost:' + port + '/api/v1');
+  // Listen on 0.0.0.0 to allow access from Android, iPhone, and LAN devices
+  await app.listen(port, '0.0.0.0');
+  console.log('AURA Coffee API is running on: http://0.0.0.0:' + port + '/api/v1');
   console.log('Swagger documentation at: http://localhost:' + port + '/api/docs');
 }
 bootstrap();

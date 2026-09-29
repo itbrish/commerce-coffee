@@ -22,7 +22,9 @@ import {
   Sparkles,
   ExternalLink,
   Menu,
-  X
+  X,
+  Zap,
+  Smartphone
 } from 'lucide-react';
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
@@ -31,14 +33,14 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   // Login form state
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('admin@ateliercoffee.com');
+  const [password, setPassword] = useState('admin12345');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleLoginSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleLoginSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setErrorMessage(null);
     setIsSubmitting(true);
 
@@ -50,10 +52,19 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const handleQuickFillAdmin = () => {
-    setEmail('admin@ateliercoffee.com');
-    setPassword('admin12345');
+  // Instant 1-Tap Direct Login for Mobile/Android/iPhone
+  const handleInstantOneTapLogin = async (targetEmail = 'admin@ateliercoffee.com', targetPass = 'admin12345') => {
+    setEmail(targetEmail);
+    setPassword(targetPass);
     setErrorMessage(null);
+    setIsSubmitting(true);
+
+    const res = await login(targetEmail, targetPass);
+    setIsSubmitting(false);
+
+    if (!res.success) {
+      setErrorMessage(res.error || 'Email atau password salah.');
+    }
   };
 
   // 1. LOADING STATE
@@ -68,7 +79,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     );
   }
 
-  // 2. UNATHENTICATED STATE: LUXURY EXECUTIVE LOGIN SCREEN
+  // 2. UNATHENTICATED STATE: LUXURY EXECUTIVE LOGIN SCREEN (OPTIMIZED FOR ANDROID & IPHONE)
   if (!user) {
     return (
       <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center p-4 sm:p-6 relative overflow-hidden font-sans">
@@ -76,10 +87,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-96 h-80 sm:h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-10 right-10 w-60 sm:w-72 h-60 sm:h-72 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
 
-        <div className="w-full max-w-md relative z-10 space-y-5 sm:space-y-6">
+        <div className="w-full max-w-md relative z-10 space-y-4 sm:space-y-6">
           {/* Brand Header */}
           <div className="text-center space-y-2">
-            <div className="inline-flex items-center justify-center w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 font-bold text-xl sm:text-2xl shadow-xl shadow-amber-500/20 mb-1 sm:mb-2">
+            <div className="inline-flex items-center justify-center w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 font-bold text-xl sm:text-2xl shadow-xl shadow-amber-500/20 mb-1">
               A
             </div>
             <h1 className="text-lg sm:text-xl font-bold tracking-widest uppercase text-white">
@@ -90,12 +101,33 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             </p>
           </div>
 
+          {/* Quick 1-Tap Instant Login Button (Designed specifically for Mobile ease) */}
+          <div className="bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500/30 p-3.5 rounded-xl flex items-center justify-between gap-3 shadow-lg">
+            <div className="flex items-center space-x-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center font-bold shrink-0">
+                <Zap size={16} />
+              </div>
+              <div className="min-w-0">
+                <div className="text-xs font-bold text-white truncate">1-Tap Akses Cepat Mobile</div>
+                <div className="text-[10px] text-amber-300 font-mono truncate">admin@ateliercoffee.com</div>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => handleInstantOneTapLogin('admin@ateliercoffee.com', 'admin12345')}
+              disabled={isSubmitting}
+              className="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg shadow transition whitespace-nowrap shrink-0"
+            >
+              {isSubmitting ? 'Masuk...' : 'Masuk Langsung'}
+            </button>
+          </div>
+
           {/* Login Card */}
-          <div className="bg-slate-900/90 backdrop-blur-md border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl space-y-5 sm:space-y-6">
-            <div className="border-b border-slate-800 pb-3 sm:pb-4">
-              <h2 className="text-sm sm:text-base font-semibold text-white">Autentikasi Akses Internal</h2>
+          <div className="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl space-y-5">
+            <div className="border-b border-slate-800 pb-3">
+              <h2 className="text-sm sm:text-base font-semibold text-white">Autentikasi Kredensial</h2>
               <p className="text-xs text-slate-400 mt-0.5">
-                Masukkan kredensial resmi untuk mengelola katalog, order, dan inventaris.
+                Masuk untuk mengelola katalog mesin, stok, pesanan, dan staff.
               </p>
             </div>
 
@@ -115,10 +147,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                   <input
                     type="email"
                     required
-                    placeholder="nama@ateliercoffee.com"
+                    inputMode="email"
+                    autoComplete="email"
+                    placeholder="admin@ateliercoffee.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/50 transition"
+                    className="w-full bg-slate-950 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/50 transition font-sans"
                   />
                   <Mail size={16} className="absolute left-3.5 top-3.5 text-slate-500" />
                 </div>
@@ -132,16 +166,17 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     required
+                    autoComplete="current-password"
                     placeholder="••••••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg pl-10 pr-10 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/50 transition"
+                    className="w-full bg-slate-950 border border-slate-700 rounded-lg pl-10 pr-10 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/50 transition font-sans"
                   />
                   <Lock size={16} className="absolute left-3.5 top-3.5 text-slate-500" />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 text-slate-400 hover:text-white p-1 focus:outline-none"
+                    className="absolute right-3 top-3 text-slate-400 hover:text-white p-1 focus:outline-none active:scale-95"
                     title={showPassword ? 'Sembunyikan password' : 'Lihat password'}
                   >
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -149,21 +184,21 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-slate-400 pt-1">
+              <div className="flex items-center justify-between text-xs text-slate-400 pt-0.5">
                 <label className="flex items-center space-x-2 cursor-pointer select-none">
                   <input
                     type="checkbox"
                     defaultChecked
                     className="rounded border-slate-700 bg-slate-950 text-amber-500 focus:ring-amber-500"
                   />
-                  <span>Ingat sesi perangkat</span>
+                  <span>Ingat sesi di perangkat ini</span>
                 </label>
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-widest rounded-lg transition-all shadow-lg shadow-amber-500/20 disabled:opacity-50 flex items-center justify-center space-x-2"
+                className="w-full py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-[0.99] text-slate-950 font-bold text-xs uppercase tracking-widest rounded-lg transition-all shadow-lg shadow-amber-500/20 disabled:opacity-50 flex items-center justify-center space-x-2"
               >
                 {isSubmitting ? (
                   <>
@@ -178,28 +213,16 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                 )}
               </button>
             </form>
-
-            {/* Quick Demo Helper */}
-            <div className="pt-2 border-t border-slate-800 text-center space-y-2">
-              <span className="text-[11px] text-slate-400 block">
-                Ingin login cepat dengan akun Super Admin default?
-              </span>
-              <button
-                type="button"
-                onClick={handleQuickFillAdmin}
-                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-amber-400 text-[11px] font-mono border border-slate-700 transition"
-              >
-                <Sparkles size={13} />
-                <span>Isi: admin@ateliercoffee.com</span>
-              </button>
-            </div>
           </div>
 
-          {/* Footer note */}
+          {/* Device & Network Indicator */}
           <div className="text-center text-[10px] sm:text-[11px] text-slate-400 space-y-1">
-            <p>Atelier du Café Indonesia • Protected Enterprise Infrastructure</p>
+            <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-400">
+              <Smartphone size={12} className="text-amber-400" />
+              <span>Dapat dibuka di Android & iPhone via Wi-Fi</span>
+            </div>
             <p className="text-[10px] text-slate-400">
-              Akses khusus staff yang memiliki wewenang operasional.
+              Atelier du Café Indonesia • Enterprise Infrastructure
             </p>
           </div>
         </div>
