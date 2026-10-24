@@ -7,13 +7,15 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev --workspace=@coffee/api\" \"npm run dev --workspace=@coffee/web\" \"npm run dev --workspace=@coffee/admin\"",
+    "setup": "npm run db:generate && npm run db:push && npm run db:seed",
+    "dev": "concurrently -n \"API,WEB,ADMIN\" -c \"cyan,green,yellow\" \"npm run dev --workspace=@coffee/api\" \"npm run dev --workspace=@coffee/web\" \"npm run dev --workspace=@coffee/admin\"",
     "dev:api": "npm run dev --workspace=@coffee/api",
     "dev:web": "npm run dev --workspace=@coffee/web",
     "dev:admin": "npm run dev --workspace=@coffee/admin",
     "build": "npm run build --workspaces",
     "test": "npm run test --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
+    "db:setup": "npm run db:generate && npm run db:push && npm run db:seed",
     "db:generate": "npm run db:generate --workspace=@coffee/api",
     "db:push": "npm run db:push --workspace=@coffee/api",
     "db:seed": "npm run db:seed --workspace=@coffee/api"
