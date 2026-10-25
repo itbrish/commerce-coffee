@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Delete, Body, Param, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { LoginDto, RegisterDto } from './auth.dto';
+import { LoginDto, RegisterDto, UpdateUserDto } from './auth.dto';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -17,7 +17,7 @@ export class AuthController {
 
   @Post('register')
   @ApiOperation({ summary: 'Register / Add new admin or staff member' })
-  async register(@Body() registerDto: RegisterDto & { role?: string }) {
+  async register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
   }
 
@@ -25,6 +25,12 @@ export class AuthController {
   @ApiOperation({ summary: 'List all admin & team staff accounts' })
   async getUsers() {
     return this.authService.getAllUsers();
+  }
+
+  @Patch('users/:id')
+  @ApiOperation({ summary: 'Update admin / staff account details, role, or active status' })
+  async updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.authService.updateUser(id, updateUserDto);
   }
 
   @Delete('users/:id')

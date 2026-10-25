@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException, ConflictException, NotFoundException
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
-import { LoginDto, RegisterDto } from './auth.dto';
+import { LoginDto, RegisterDto, UpdateUserDto } from './auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -44,6 +44,7 @@ export class AuthService {
         passwordHash,
         name: registerDto.name,
         role: (registerDto.role as any) || 'ADMIN',
+        isActive: true,
       },
     });
     const { passwordHash: _, ...result } = user;
@@ -62,10 +63,46 @@ export class AuthService {
         name: true,
         email: true,
         role: true,
+        isActive: true,
         createdAt: true,
         updatedAt: true,
       },
     });
+  }
+
+  async updateUser(id: string, updateUserDto: UpdateUserDto) {
+    const user = await this.prisma.user.findUnique({ where: { id } });
+    if (!user) throw new NotFoundException('User not found');
+
+    const data: any = {};
+    if (updateUserDto.name !== undefined) data.name = updateUserDto.name;
+    if (updateUserDto.email !== undefined) {
+      if (updateUserDto.email !== user.email) {
+        const existing = await this.prisma.user.findUnique({ where: { email: updateUserDto.email } });
+        if (existing) throw new ConflictException('Email is already registered');
+      }
+      data.email = updateUserDto.email;
+    }
+    if (updateUserDto.role !== undefined) data.role = updateUserDto.role as any;
+    if (updateUserDto.isActive !== undefined) data.isActive = updateUserDto.isActive;
+    if (updateUserDto.password) {
+      data.passwordHash = await bcrypt.hash(updateUserDto.password, 10);
+    }
+
+    const updated = await this.prisma.user.update({
+      where: { id },
+      data,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+    return updated;
   }
 
   async deleteUser(id: string) {
