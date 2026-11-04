@@ -8,11 +8,11 @@ import { CompareModal } from '../components/CompareModal';
 import { FloatingWhatsApp } from '../components/FloatingWhatsApp';
 
 export const metadata: Metadata = {
-  title: 'ATELIER DU CAFÉ | Premium Espresso Machines & Grinding Architecture',
-  description: 'Curated collection of the world revered espresso machines, dual-boiler systems, and precision grinders. Direct warranty and white-glove setup.',
+  title: 'BREWPARTS | Precision Espresso Machines, Grinders & Spare Parts',
+  description: 'Distributor resmi mesin espresso komersial, home prosumer, grinder presisi, dan suku cadang original. Workshop & servis terpercaya oleh PT Satu Saudara Sedarah.',
   openGraph: {
-    title: 'ATELIER DU CAFÉ - Luxury Espresso Equipment',
-    description: 'Designed for exceptional extraction. La Marzocco, Rocket, Victoria Arduino, Nuova Simonelli.',
+    title: 'BREWPARTS - Precision Coffee Machinery & Genuine Parts',
+    description: 'Designed for exceptional extraction. La Marzocco, Rocket, Victoria Arduino, Nuova Simonelli, Mazzer & genuine spare parts.',
     type: 'website',
   },
 };
@@ -44,9 +44,29 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Organization',
-              name: 'Atelier Du Café',
-              url: 'https://ateliercoffee.co',
+              name: 'Brewparts',
+              legalName: 'PT SATU SAUDARA SEDARAH',
+              url: 'https://brewparts.id',
               logo: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=300&q=80',
+              address: [
+                {
+                  '@type': 'PostalAddress',
+                  streetAddress: 'Gedung Menara 165 Lantai 4 Jalan TB Simatupang Kav. 1, Desa/Kelurahan Cilandak Timur, Kec. Pasar Minggu',
+                  addressLocality: 'Jakarta Selatan',
+                  addressRegion: 'DKI Jakarta',
+                  addressCountry: 'ID',
+                  name: 'Head Office',
+                },
+                {
+                  '@type': 'PostalAddress',
+                  streetAddress: 'Jl. Mawaddah XI No.14, Klp. Dua, Kecamatan Kelapa Dua',
+                  addressLocality: 'Kabupaten Tangerang',
+                  addressRegion: 'Banten',
+                  postalCode: '15810',
+                  addressCountry: 'ID',
+                  name: 'Workshop & Service Center',
+                },
+              ],
               contactPoint: {
                 '@type': 'ContactPoint',
                 telephone: '+62-812-3456-7890',

@@ -33,7 +33,7 @@ export function Navbar() {
       {/* Top Banner / Showroom Concierge Note */}
       <div className="bg-[#1C1A19] text-[#E8D8C8] text-[9px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.25em] uppercase py-1.5 px-4 text-center font-sans flex items-center justify-center space-x-2">
         <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse shrink-0" />
-        <span className="truncate">Official Italian Haute Espresso Equipment • White-Glove Dispatch</span>
+        <span className="truncate">Brewparts Official • Precision Espresso Machinery & Parts • Authorized Technical Service</span>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-6">
@@ -52,11 +52,11 @@ export function Navbar() {
         {/* 1. Left Section: Brand Logo & Main Nav */}
         <div className="flex items-center space-x-8">
           <Link href="/" className="inline-block shrink-0">
-            <span className="font-serif text-xl sm:text-2xl md:text-3xl tracking-wider text-stone-900 font-normal block uppercase">
-              Atelier du Café
+            <span className="font-serif text-xl sm:text-2xl md:text-3xl tracking-wider text-stone-900 font-semibold block uppercase">
+              Brewparts
             </span>
-            <span className="text-[8px] sm:text-[9px] tracking-[0.3em] sm:tracking-[0.35em] text-[#8C827A] uppercase font-sans block -mt-1">
-              Haute Espresso Equipment
+            <span className="text-[8px] sm:text-[9px] tracking-[0.25em] sm:tracking-[0.3em] text-[#8C827A] uppercase font-sans block -mt-1 font-medium">
+              Precision Machinery & Parts
             </span>
           </Link>
 
@@ -108,7 +108,7 @@ export function Navbar() {
 
           {/* OFFICIAL WHATSAPP VIP CONCIERGE BUTTON */}
           <a
-            href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Atelier du Café, saya ingin konsultasi pemilihan mesin kopi premium.')}`}
+            href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Brewparts, saya ingin konsultasi pemilihan mesin kopi & spare parts.')}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center space-x-2 bg-[#2C2825] hover:bg-stone-950 text-cream-50 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-none border border-stone-800 transition-all duration-300 shadow-md group"
@@ -180,7 +180,7 @@ export function Navbar() {
 
           <div className="pt-4 border-t border-stone-200">
             <a
-              href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Atelier du Café, saya ingin konsultasi mesin kopi.')}`}
+              href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Brewparts, saya ingin konsultasi mesin kopi & suku cadang.')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full flex items-center justify-center space-x-2.5 bg-[#25D366] hover:bg-emerald-600 text-white py-3 text-xs tracking-widest uppercase font-bold shadow transition-colors"

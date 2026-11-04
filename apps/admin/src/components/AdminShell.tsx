@@ -91,13 +91,13 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           {/* Brand Header */}
           <div className="text-center space-y-2">
             <div className="inline-flex items-center justify-center w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 font-bold text-xl sm:text-2xl shadow-xl shadow-amber-500/20 mb-1">
-              A
+              B
             </div>
             <h1 className="text-lg sm:text-xl font-bold tracking-widest uppercase text-white">
-              ATELIER DU CAFÉ
+              BREWPARTS
             </h1>
             <p className="text-[10px] sm:text-xs text-amber-400/90 font-mono uppercase tracking-wider">
-              Executive Operations Portal
+              Operations & Technical Portal
             </p>
           </div>
 
@@ -222,7 +222,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               <span>Dapat dibuka di Android & iPhone via Wi-Fi</span>
             </div>
             <p className="text-[10px] text-slate-400">
-              Atelier du Café Indonesia • Enterprise Infrastructure
+              Brewparts Indonesia • PT Satu Saudara Sedarah
             </p>
           </div>
         </div>
@@ -255,9 +255,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           </button>
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 rounded bg-amber-500 flex items-center justify-center font-bold text-slate-950 text-xs">
-              A
+              B
             </div>
-            <span className="font-bold text-xs uppercase text-white tracking-wider">Atelier Admin</span>
+            <span className="font-bold text-xs uppercase text-white tracking-wider">Brewparts Admin</span>
           </div>
         </div>
 
@@ -287,10 +287,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 rounded bg-amber-500 flex items-center justify-center font-bold text-slate-950">
-                A
+                B
               </div>
               <div>
-                <h1 className="font-bold text-sm tracking-wider uppercase text-white">Atelier Admin</h1>
+                <h1 className="font-bold text-sm tracking-wider uppercase text-white">Brewparts Admin</h1>
                 <p className="text-[10px] text-slate-400">Operations Control</p>
               </div>
             </div>

@@ -3,8 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
-import { fetchApi } from '../../../../lib/api';
-import { WhatsAppIcon } from '../../../../components/WhatsAppIcon';
+import { fetchApi } from '../../../lib/api';
+import { WhatsAppIcon } from '../../../components/WhatsAppIcon';
 
 interface OrderDetailProps {
   params: { id: string };
@@ -31,7 +31,7 @@ export default async function OrderSuccessPage({ params }: OrderDetailProps) {
   };
 
   const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '6281234567890';
-  const waText = `Halo Atelier du Café, saya baru saja membuat pesanan resmi *${order.orderNumber}* senilai ${formatRupiah(order.totalAmount)} atas nama ${order.customer?.name || 'Customer'}. Mohon instruksi pembayaran dan jadwal pengiriman.`;
+  const waText = `Halo Brewparts, saya baru saja membuat pesanan resmi *${order.orderNumber}* senilai ${formatRupiah(order.totalAmount)} atas nama ${order.customer?.name || 'Customer'}. Mohon instruksi pembayaran dan jadwal pengiriman.`;
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-16 space-y-12">
@@ -89,10 +89,10 @@ export default async function OrderSuccessPage({ params }: OrderDetailProps) {
             <div className="p-3 bg-[#FAF7F2] border border-stone-200 space-y-1">
               <p className="font-bold text-stone-900">Bank Central Asia (BCA)</p>
               <p className="font-mono text-sm text-stone-900">882-019-8822</p>
-              <p className="text-[11px] text-stone-500">a/n PT ATELIER DU CAFE INDONESIA</p>
+              <p className="text-[11px] text-stone-600 font-medium">a/n PT SATU SAUDARA SEDARAH</p>
             </div>
             <p className="text-[11px] text-stone-500 leading-relaxed">
-              Mohon sertakan berita transfer: <span className="font-mono font-bold text-stone-800">{order.orderNumber}</span>.
+              Mohon sertakan berita transfer: <span className="font-mono font-bold text-stone-800">{order.orderNumber}</span>. Konfirmasi pembayaran dan pengiriman juga dapat diverifikasi langsung melalui WhatsApp Concierge Brewparts.
             </p>
           </div>
         </div>

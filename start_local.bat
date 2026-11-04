@@ -1,13 +1,13 @@
 @echo off
 setlocal enabledelayedexpansion
-title Atelier du Cafe - Local Server Launcher
+title Brewparts - Local Server Launcher
 color 0E
 
 :: Pindah ke folder tempat file bat ini berada (berlaku di laptop manapun)
 cd /d "%~dp0"
 
 echo ======================================================================
-echo           ATELIER DU CAFE - LUXURY COFFEE E-COMMERCE
+echo           BREWPARTS - PRECISION ESPRESSO MACHINERY & PARTS
 echo ======================================================================
 echo.
 

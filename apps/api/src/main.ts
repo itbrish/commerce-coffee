@@ -27,8 +27,8 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
 
   const config = new DocumentBuilder()
-    .setTitle('AURA Atelier Coffee E-Commerce API')
-    .setDescription('Production-ready REST API for luxury coffee machines, inventory, transactional checkout, WhatsApp integration, and editorial CMS.')
+    .setTitle('Brewparts E-Commerce & Precision Machinery API')
+    .setDescription('Production-ready REST API for espresso machines, precision parts, inventory, transactional checkout, WhatsApp integration, and editorial CMS by PT Satu Saudara Sedarah.')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
@@ -39,7 +39,7 @@ async function bootstrap() {
   const port = process.env.PORT || 4000;
   // Listen on 0.0.0.0 to allow access from Android, iPhone, and LAN devices
   await app.listen(port, '0.0.0.0');
-  console.log('AURA Coffee API is running on: http://0.0.0.0:' + port + '/api/v1');
+  console.log('Brewparts API is running on: http://0.0.0.0:' + port + '/api/v1');
   console.log('Swagger documentation at: http://localhost:' + port + '/api/docs');
 }
 bootstrap();

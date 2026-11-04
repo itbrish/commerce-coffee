@@ -48,7 +48,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=2000&auto=format&fit=crop"
-            alt="Atelier du Cafe Luxury Espresso Machinery"
+            alt="Brewparts Precision Espresso Machinery & Parts"
             fill
             priority
             className="object-cover opacity-35 scale-105 transition-transform duration-10000 hover:scale-100"
@@ -82,7 +82,7 @@ export default async function HomePage() {
               Jelajahi Katalog 2026
             </Link>
             <a
-              href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Atelier du Café, saya ingin konsultasi private pemilihan mesin espresso.')}`}
+              href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Brewparts, saya ingin konsultasi pemilihan mesin espresso & spare parts.')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 border border-[#25D366]/60 hover:border-[#25D366] text-cream-100 hover:text-white text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase font-semibold transition-all backdrop-blur-sm flex items-center justify-center space-x-2.5 bg-stone-900/50 hover:bg-stone-900/80 group"
@@ -268,15 +268,15 @@ export default async function HomePage() {
               <span className="italic text-[#E8D8C8]">Sebuah Mahakarya Presisi</span>
             </h2>
             <p className="text-xs sm:text-sm font-light text-stone-300 leading-relaxed">
-              Di Atelier du Café, kami percaya bahwa setiap cangkir espresso adalah hasil sinergi antara sains termal, tekanan hidrolik yang terkalibrasi, dan sentuhan jiwa sang barista.
+              Di Brewparts, kami percaya bahwa setiap cangkir espresso adalah hasil sinergi antara sains termal, tekanan hidrolik yang terkalibrasi, ketersediaan suku cadang presisi, dan sentuhan jiwa sang barista.
             </p>
             <p className="text-xs sm:text-sm font-light text-stone-300 leading-relaxed">
-              Kami bermitra langsung dengan manufaktur ikonik dunia untuk menghadirkan teknologi dual boiler, digital PID terisolasi, serta rotary pump bertekanan stabil langsung ke bar Anda.
+              Didukung oleh PT Satu Saudara Sedarah dan workshop teknis tersertifikasi, kami menghadirkan mesin komersial, home prosumer, grinder, serta layanan maintenance & spare parts resmi langsung ke bar Anda.
             </p>
 
             <div className="pt-2 sm:pt-4">
               <a
-                href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Atelier du Café, saya ingin konsultasi pemilihan mesin untuk kafe saya.')}`}
+                href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Brewparts, saya ingin konsultasi pengadaan mesin & maintenance kafe saya.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-[#25D366] hover:bg-emerald-600 text-white text-xs tracking-widest uppercase font-bold transition-all shadow-lg group"

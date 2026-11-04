@@ -130,7 +130,7 @@ export default function CheckoutPage() {
           Checkout & Pemesanan Resmi
         </h1>
         <p className="text-xs sm:text-sm text-stone-500 font-light mt-1">
-          Lengkapi informasi kontak dan pengiriman untuk penerbitan Invoice & Proforma resmi Atelier du Café.
+          Lengkapi informasi kontak dan pengiriman untuk penerbitan Invoice & Proforma resmi Brewparts (PT Satu Saudara Sedarah).
         </p>
       </div>
 

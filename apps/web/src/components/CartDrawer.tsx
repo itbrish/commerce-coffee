@@ -20,7 +20,7 @@ export function CartDrawer() {
   const handleWhatsAppCheckout = () => {
     setIsSubmittingWA(true);
     const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '6281234567890';
-    let text = 'Halo Atelier du Café, saya ingin memesan produk berikut melalui WhatsApp:\n\n';
+    let text = 'Halo Brewparts, saya ingin memesan produk berikut melalui WhatsApp:\n\n';
     items.forEach((item, idx) => {
       text += `${idx + 1}. *${item.name}* (SKU: ${item.sku})\n   Qty: ${item.quantity} x ${formatRupiah(item.price)} = ${formatRupiah(item.price * item.quantity)}\n`;
     });

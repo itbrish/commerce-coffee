@@ -5,7 +5,7 @@ import { WhatsAppIcon } from './WhatsAppIcon';
 
 export function FloatingWhatsApp() {
   const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '6281234567890';
-  const text = 'Halo Atelier du Café, saya ingin konsultasi pemilihan mesin kopi premium.';
+  const text = 'Halo Brewparts, saya ingin konsultasi pemilihan mesin kopi & spare parts.';
 
   return (
     <aside aria-label="WhatsApp Concierge" className="fixed bottom-7 right-7 z-40 flex items-center group">

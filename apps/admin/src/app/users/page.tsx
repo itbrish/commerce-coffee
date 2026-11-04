@@ -317,7 +317,7 @@ export default function AdminUsersPage() {
             Team & Admin User Management
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Kelola hak akses tim operasional, sales concierge, logistik gudang, dan kredensial administrator Atelier du Café.
+            Kelola hak akses tim operasional, sales concierge, logistik gudang, dan kredensial administrator Brewparts (PT Satu Saudara Sedarah).
           </p>
         </div>
 

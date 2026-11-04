@@ -5,8 +5,8 @@ import { AuthProvider } from '../lib/auth-context';
 import { AdminShell } from '../components/AdminShell';
 
 export const metadata: Metadata = {
-  title: 'ATELIER DU CAFÉ | Executive Operations Portal',
-  description: 'Enterprise inventory, order management, WhatsApp leads, and catalog orchestration.',
+  title: 'BREWPARTS | Operations & Inventory Portal',
+  description: 'Enterprise inventory, order management, WhatsApp leads, and catalog orchestration by PT Satu Saudara Sedarah.',
 };
 
 export default function AdminLayout({
