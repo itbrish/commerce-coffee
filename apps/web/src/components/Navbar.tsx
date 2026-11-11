@@ -1,17 +1,40 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ShoppingBag, Search, Menu, X, Scale } from 'lucide-react';
+import { ShoppingBag, Search, Menu, X, Scale, ChevronDown, ArrowRight } from 'lucide-react';
 import { useCartStore } from '../lib/cart-store';
 import { useCompareStore } from '../lib/compare-store';
 import { WhatsAppIcon } from './WhatsAppIcon';
 
+const SPARE_PART_CATEGORIES = [
+  { name: 'Gasket Mesin Kopi', slug: 'gasket-mesin-kopi', tag: 'Group Head Seal & Silicon' },
+  { name: 'Keypad Button', slug: 'keypad-button', tag: 'Touch Membrane & Buttons' },
+  { name: 'Elektrikal', slug: 'elektrikal', tag: 'SSR, Heater & Relay' },
+  { name: 'Solenoid Valve', slug: 'solenoid-valve', tag: 'Parker / ODE 2 & 3 Way' },
+  { name: 'Fitting Nepel Nut', slug: 'fitting-nepel-nut', tag: 'Brass & Copper Fittings' },
+  { name: 'Expansion Valve Anti Vaccum', slug: 'expansion-valve-anti-vaccum', tag: 'Boiler Safety & OPV' },
+  { name: 'Pump Head Rotary Vane Pump', slug: 'pump-head-rotary-vane-pump', tag: 'Procon & Fluid-o-Tech' },
+];
+
 export function Navbar() {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [categoryOpen, setCategoryOpen] = useState(false);
+  const [mobileCategoryOpen, setMobileCategoryOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const categoryDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target as Node)) {
+        setCategoryOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const totalCartItems = useCartStore((state) => state.getTotalItems());
   const openCart = useCartStore((state) => state.openCart);
@@ -62,9 +85,65 @@ export function Navbar() {
 
           <nav className="hidden xl:flex items-center space-x-6 text-[12px] tracking-[0.2em] uppercase font-medium text-stone-700">
             <Link href="/shop" className="hover:text-stone-950 transition-colors">Katalog</Link>
-            <Link href="/shop?category=espresso-commercial" className="hover:text-stone-950 transition-colors">Commercial</Link>
-            <Link href="/shop?category=espresso-home" className="hover:text-stone-950 transition-colors">Home Atelier</Link>
-            <Link href="/shop?category=grinders" className="hover:text-stone-950 transition-colors">Grinders</Link>
+
+            {/* CATEGORY DROPDOWN MENU */}
+            <div className="relative" ref={categoryDropdownRef}>
+              <button
+                type="button"
+                onClick={() => setCategoryOpen((prev) => !prev)}
+                className={`flex items-center space-x-1 hover:text-stone-950 transition-colors py-2 focus:outline-none ${categoryOpen ? 'text-[#B58A63] font-semibold' : ''}`}
+                aria-expanded={categoryOpen}
+              >
+                <span>Category</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 stroke-[2] ${categoryOpen ? 'rotate-180 text-[#B58A63]' : 'text-stone-400'}`} />
+              </button>
+
+              {categoryOpen && (
+                <div className="absolute top-full left-0 mt-2 w-80 bg-white border border-stone-200/90 shadow-2xl rounded-xl py-3 px-2 z-50 animate-fadeIn">
+                  <div className="px-3 pb-2 mb-2 border-b border-stone-100 flex items-center justify-between">
+                    <span className="text-[10px] tracking-[0.2em] uppercase text-[#8C827A] font-semibold">
+                      Spare Parts & Parts
+                    </span>
+                    <span className="text-[9px] bg-stone-100 text-stone-600 px-1.5 py-0.5 rounded font-mono font-medium">
+                      7 Kategori
+                    </span>
+                  </div>
+                  <div className="space-y-0.5">
+                    {SPARE_PART_CATEGORIES.map((cat) => (
+                      <Link
+                        key={cat.slug}
+                        href={`/shop?category=${cat.slug}`}
+                        onClick={() => setCategoryOpen(false)}
+                        className="group flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#FAF7F2] transition-colors"
+                      >
+                        <div className="flex flex-col">
+                          <span className="text-[12px] font-medium text-stone-800 group-hover:text-[#B58A63] tracking-normal normal-case">
+                            {cat.name}
+                          </span>
+                          <span className="text-[10px] text-stone-400 tracking-normal normal-case">
+                            {cat.tag}
+                          </span>
+                        </div>
+                        <ArrowRight className="w-3.5 h-3.5 text-stone-300 group-hover:text-[#B58A63] group-hover:translate-x-0.5 transition-all opacity-0 group-hover:opacity-100" />
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="mt-2 pt-2 border-t border-stone-100 px-2">
+                    <Link
+                      href="/shop?category=spare-parts"
+                      onClick={() => setCategoryOpen(false)}
+                      className="block text-center py-2 px-3 rounded-lg bg-stone-900 hover:bg-[#B58A63] text-white text-[10px] font-medium tracking-wider uppercase transition-colors"
+                    >
+                      Lihat Semua Spare Parts
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <Link href="/shop?category=commercial-espresso-machines" className="hover:text-stone-950 transition-colors">Commercial</Link>
+            <Link href="/shop?category=home-espresso-machines" className="hover:text-stone-950 transition-colors">Home Atelier</Link>
+            <Link href="/shop?category=coffee-grinders" className="hover:text-stone-950 transition-colors">Grinders</Link>
           </nav>
         </div>
 
@@ -206,11 +285,51 @@ export function Navbar() {
       {mobileMenuOpen && (
         <div className="xl:hidden border-t border-stone-200 bg-[#FDFBF7] px-6 py-6 space-y-5 animate-fadeIn shadow-2xl">
           <nav className="flex flex-col space-y-3.5 text-xs tracking-[0.2em] uppercase font-semibold text-stone-800">
-            <Link href="/shop" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Semua Koleksi Mesin</Link>
-            <Link href="/shop?category=espresso-commercial" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Commercial Machines</Link>
-            <Link href="/shop?category=espresso-home" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Home Espresso Atelier</Link>
-            <Link href="/shop?category=grinders" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Precision Grinders</Link>
-            <Link href="/shop?category=accessories" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Accessories & Tools</Link>
+            <Link href="/shop" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Semua Katalog Mesin</Link>
+
+            {/* Mobile Category Accordion */}
+            <div className="border-y border-stone-200/80 py-2.5 my-1">
+              <button
+                type="button"
+                onClick={() => setMobileCategoryOpen((prev) => !prev)}
+                className="w-full flex items-center justify-between py-1 text-stone-900 hover:text-[#B58A63] tracking-[0.2em] uppercase font-bold text-xs"
+              >
+                <span>Category (Spare Parts)</span>
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileCategoryOpen ? 'rotate-180 text-[#B58A63]' : ''}`} />
+              </button>
+              {mobileCategoryOpen && (
+                <div className="pl-2 pr-1 pt-2.5 pb-1 space-y-2">
+                  {SPARE_PART_CATEGORIES.map((cat) => (
+                    <Link
+                      key={cat.slug}
+                      href={`/shop?category=${cat.slug}`}
+                      onClick={() => {
+                        setCategoryOpen(false);
+                        setMobileMenuOpen(false);
+                      }}
+                      className="block py-1 text-xs text-stone-600 hover:text-[#B58A63] normal-case tracking-normal font-normal"
+                    >
+                      • {cat.name}
+                    </Link>
+                  ))}
+                  <Link
+                    href="/shop?category=spare-parts"
+                    onClick={() => {
+                      setCategoryOpen(false);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="block pt-1.5 text-[11px] font-semibold text-[#B58A63] underline normal-case tracking-normal"
+                  >
+                    Lihat Semua Spare Parts →
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            <Link href="/shop?category=commercial-espresso-machines" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Commercial Machines</Link>
+            <Link href="/shop?category=home-espresso-machines" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Home Espresso Atelier</Link>
+            <Link href="/shop?category=coffee-grinders" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Precision Grinders</Link>
+            <Link href="/shop?category=coffee-accessories" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Accessories & Tools</Link>
           </nav>
 
           <div className="pt-4 border-t border-stone-200">
