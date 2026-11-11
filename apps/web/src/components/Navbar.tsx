@@ -18,18 +18,33 @@ const SPARE_PART_CATEGORIES = [
   { name: 'Pump Head Rotary Vane Pump', slug: 'pump-head-rotary-vane-pump', tag: 'Procon & Fluid-o-Tech' },
 ];
 
+const COFFEE_MACHINE_BRANDS = [
+  { name: 'La Marzocco', slug: 'la-marzocco', desc: 'Commercial & Luxury Home Espresso', origin: 'Florence, Italy' },
+  { name: 'Victoria Arduino', slug: 'victoria-arduino', desc: 'Gravimetric & NEO Technology', origin: 'Belforte, Italy' },
+  { name: 'Nuova Simonelli', slug: 'nuova-simonelli', desc: 'WBC Certified High-Volume Machines', origin: 'Marche, Italy' },
+  { name: 'Rocket Espresso', slug: 'rocket-espresso', desc: 'Fatto a Mano in Milano', origin: 'Milano, Italy' },
+  { name: 'ECM Germany', slug: 'ecm', desc: 'German Engineering & Handcrafted Detail', origin: 'Heidelberg, Germany' },
+  { name: 'Rancilio', slug: 'rancilio', desc: 'Historic Italian Espresso Heritage', origin: 'Parabiago, Italy' },
+];
+
 export function Navbar() {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
+  const [brandOpen, setBrandOpen] = useState(false);
   const [mobileCategoryOpen, setMobileCategoryOpen] = useState(false);
+  const [mobileBrandOpen, setMobileBrandOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
+  const brandDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target as Node)) {
         setCategoryOpen(false);
+      }
+      if (brandDropdownRef.current && !brandDropdownRef.current.contains(event.target as Node)) {
+        setBrandOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -83,14 +98,20 @@ export function Navbar() {
             </span>
           </Link>
 
-          <nav className="hidden xl:flex items-center space-x-6 text-[12px] tracking-[0.2em] uppercase font-medium text-stone-700">
-            <Link href="/shop" className="hover:text-stone-950 transition-colors">Katalog</Link>
+          <nav className="hidden xl:flex items-center space-x-7 text-[12px] tracking-[0.2em] uppercase font-medium text-stone-700">
+            {/* 1. HOME */}
+            <Link href="/" className="hover:text-stone-950 transition-colors py-2">
+              Home
+            </Link>
 
-            {/* CATEGORY DROPDOWN MENU */}
+            {/* 2. CATEGORY (Spare Parts Dropdown) */}
             <div className="relative" ref={categoryDropdownRef}>
               <button
                 type="button"
-                onClick={() => setCategoryOpen((prev) => !prev)}
+                onClick={() => {
+                  setCategoryOpen((prev) => !prev);
+                  setBrandOpen(false);
+                }}
                 className={`flex items-center space-x-1 hover:text-stone-950 transition-colors py-2 focus:outline-none ${categoryOpen ? 'text-[#B58A63] font-semibold' : ''}`}
                 aria-expanded={categoryOpen}
               >
@@ -141,9 +162,71 @@ export function Navbar() {
               )}
             </div>
 
-            <Link href="/shop?category=commercial-espresso-machines" className="hover:text-stone-950 transition-colors">Commercial</Link>
-            <Link href="/shop?category=home-espresso-machines" className="hover:text-stone-950 transition-colors">Home Atelier</Link>
-            <Link href="/shop?category=coffee-grinders" className="hover:text-stone-950 transition-colors">Grinders</Link>
+            {/* 3. BRAND (Mesin Kopi Dropdown) */}
+            <div className="relative" ref={brandDropdownRef}>
+              <button
+                type="button"
+                onClick={() => {
+                  setBrandOpen((prev) => !prev);
+                  setCategoryOpen(false);
+                }}
+                className={`flex items-center space-x-1 hover:text-stone-950 transition-colors py-2 focus:outline-none ${brandOpen ? 'text-[#B58A63] font-semibold' : ''}`}
+                aria-expanded={brandOpen}
+              >
+                <span>Brand</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 stroke-[2] ${brandOpen ? 'rotate-180 text-[#B58A63]' : 'text-stone-400'}`} />
+              </button>
+
+              {brandOpen && (
+                <div className="absolute top-full left-0 mt-2 w-80 bg-white border border-stone-200/90 shadow-2xl rounded-xl py-3 px-2 z-50 animate-fadeIn">
+                  <div className="px-3 pb-2 mb-2 border-b border-stone-100 flex items-center justify-between">
+                    <span className="text-[10px] tracking-[0.2em] uppercase text-[#8C827A] font-semibold">
+                      Mesin Kopi by Brand
+                    </span>
+                    <span className="text-[9px] bg-amber-50 text-[#B58A63] border border-[#B58A63]/30 px-1.5 py-0.5 rounded font-mono font-medium">
+                      Official Espresso
+                    </span>
+                  </div>
+                  <div className="space-y-0.5">
+                    {COFFEE_MACHINE_BRANDS.map((b) => (
+                      <Link
+                        key={b.slug}
+                        href={`/shop?brand=${b.slug}`}
+                        onClick={() => setBrandOpen(false)}
+                        className="group flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#FAF7F2] transition-colors"
+                      >
+                        <div className="flex flex-col">
+                          <span className="text-[12px] font-medium text-stone-800 group-hover:text-[#B58A63] tracking-normal normal-case">
+                            {b.name}
+                          </span>
+                          <span className="text-[10px] text-stone-400 tracking-normal normal-case">
+                            {b.desc}
+                          </span>
+                        </div>
+                        <ArrowRight className="w-3.5 h-3.5 text-stone-300 group-hover:text-[#B58A63] group-hover:translate-x-0.5 transition-all opacity-0 group-hover:opacity-100" />
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="mt-2 pt-2 border-t border-stone-100 px-2">
+                    <Link
+                      href="/shop?category=commercial-espresso-machines"
+                      onClick={() => setBrandOpen(false)}
+                      className="block text-center py-2 px-3 rounded-lg bg-stone-900 hover:bg-[#B58A63] text-white text-[10px] font-medium tracking-wider uppercase transition-colors"
+                    >
+                      Koleksi Semua Mesin Kopi
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 4. CONSULTATION */}
+            <Link
+              href="/consultation"
+              className="hover:text-stone-950 transition-colors py-2 flex items-center space-x-1"
+            >
+              <span>Consultation</span>
+            </Link>
           </nav>
         </div>
 
@@ -285,10 +368,13 @@ export function Navbar() {
       {mobileMenuOpen && (
         <div className="xl:hidden border-t border-stone-200 bg-[#FDFBF7] px-6 py-6 space-y-5 animate-fadeIn shadow-2xl">
           <nav className="flex flex-col space-y-3.5 text-xs tracking-[0.2em] uppercase font-semibold text-stone-800">
-            <Link href="/shop" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Semua Katalog Mesin</Link>
+            {/* 1. HOME */}
+            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">
+              Home
+            </Link>
 
-            {/* Mobile Category Accordion */}
-            <div className="border-y border-stone-200/80 py-2.5 my-1">
+            {/* 2. CATEGORY (Spare Parts Accordion) */}
+            <div className="border-y border-stone-200/80 py-2.5 my-0.5">
               <button
                 type="button"
                 onClick={() => setMobileCategoryOpen((prev) => !prev)}
@@ -303,10 +389,7 @@ export function Navbar() {
                     <Link
                       key={cat.slug}
                       href={`/shop?category=${cat.slug}`}
-                      onClick={() => {
-                        setCategoryOpen(false);
-                        setMobileMenuOpen(false);
-                      }}
+                      onClick={() => setMobileMenuOpen(false)}
                       className="block py-1 text-xs text-stone-600 hover:text-[#B58A63] normal-case tracking-normal font-normal"
                     >
                       • {cat.name}
@@ -314,10 +397,7 @@ export function Navbar() {
                   ))}
                   <Link
                     href="/shop?category=spare-parts"
-                    onClick={() => {
-                      setCategoryOpen(false);
-                      setMobileMenuOpen(false);
-                    }}
+                    onClick={() => setMobileMenuOpen(false)}
                     className="block pt-1.5 text-[11px] font-semibold text-[#B58A63] underline normal-case tracking-normal"
                   >
                     Lihat Semua Spare Parts →
@@ -326,10 +406,47 @@ export function Navbar() {
               )}
             </div>
 
-            <Link href="/shop?category=commercial-espresso-machines" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Commercial Machines</Link>
-            <Link href="/shop?category=home-espresso-machines" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Home Espresso Atelier</Link>
-            <Link href="/shop?category=coffee-grinders" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Precision Grinders</Link>
-            <Link href="/shop?category=coffee-accessories" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[#B58A63]">Accessories & Tools</Link>
+            {/* 3. BRAND (Mesin Kopi Accordion) */}
+            <div className="border-b border-stone-200/80 pb-2.5 mb-0.5">
+              <button
+                type="button"
+                onClick={() => setMobileBrandOpen((prev) => !prev)}
+                className="w-full flex items-center justify-between py-1 text-stone-900 hover:text-[#B58A63] tracking-[0.2em] uppercase font-bold text-xs"
+              >
+                <span>Brand (Mesin Kopi)</span>
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileBrandOpen ? 'rotate-180 text-[#B58A63]' : ''}`} />
+              </button>
+              {mobileBrandOpen && (
+                <div className="pl-2 pr-1 pt-2.5 pb-1 space-y-2">
+                  {COFFEE_MACHINE_BRANDS.map((b) => (
+                    <Link
+                      key={b.slug}
+                      href={`/shop?brand=${b.slug}`}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block py-1 text-xs text-stone-600 hover:text-[#B58A63] normal-case tracking-normal font-normal"
+                    >
+                      • {b.name}
+                    </Link>
+                  ))}
+                  <Link
+                    href="/shop?category=commercial-espresso-machines"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block pt-1.5 text-[11px] font-semibold text-[#B58A63] underline normal-case tracking-normal"
+                  >
+                    Koleksi Semua Mesin Kopi →
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* 4. CONSULTATION */}
+            <Link
+              href="/consultation"
+              onClick={() => setMobileMenuOpen(false)}
+              className="py-1 hover:text-[#B58A63]"
+            >
+              Consultation
+            </Link>
           </nav>
 
           <div className="pt-4 border-t border-stone-200">
