@@ -23,7 +23,6 @@ import {
   ExternalLink,
   Menu,
   X,
-  Zap,
   Smartphone
 } from 'lucide-react';
 
@@ -33,8 +32,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   // Login form state
-  const [email, setEmail] = useState('admin@ateliercoffee.com');
-  const [password, setPassword] = useState('admin12345');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -45,21 +44,6 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     setIsSubmitting(true);
 
     const res = await login(email, password);
-    setIsSubmitting(false);
-
-    if (!res.success) {
-      setErrorMessage(res.error || 'Email atau password salah.');
-    }
-  };
-
-  // Instant 1-Tap Direct Login for Mobile/Android/iPhone
-  const handleInstantOneTapLogin = async (targetEmail = 'admin@ateliercoffee.com', targetPass = 'admin12345') => {
-    setEmail(targetEmail);
-    setPassword(targetPass);
-    setErrorMessage(null);
-    setIsSubmitting(true);
-
-    const res = await login(targetEmail, targetPass);
     setIsSubmitting(false);
 
     if (!res.success) {
@@ -101,27 +85,6 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             </p>
           </div>
 
-          {/* Quick 1-Tap Instant Login Button (Designed specifically for Mobile ease) */}
-          <div className="bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500/30 p-3.5 rounded-xl flex items-center justify-between gap-3 shadow-lg">
-            <div className="flex items-center space-x-2.5 min-w-0">
-              <div className="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center font-bold shrink-0">
-                <Zap size={16} />
-              </div>
-              <div className="min-w-0">
-                <div className="text-xs font-bold text-white truncate">1-Tap Akses Cepat Mobile</div>
-                <div className="text-[10px] text-amber-300 font-mono truncate">admin@ateliercoffee.com</div>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => handleInstantOneTapLogin('admin@ateliercoffee.com', 'admin12345')}
-              disabled={isSubmitting}
-              className="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-lg shadow transition whitespace-nowrap shrink-0"
-            >
-              {isSubmitting ? 'Masuk...' : 'Masuk Langsung'}
-            </button>
-          </div>
-
           {/* Login Card */}
           <div className="bg-slate-900/95 backdrop-blur-md border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl space-y-5">
             <div className="border-b border-slate-800 pb-3">
@@ -149,7 +112,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                     required
                     inputMode="email"
                     autoComplete="email"
-                    placeholder="admin@ateliercoffee.com"
+                    placeholder="admin@brewparts.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/50 transition font-sans"
