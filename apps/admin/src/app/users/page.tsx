@@ -205,7 +205,7 @@ export default function AdminUsersPage() {
 
   // Toggle Active Status
   const handleToggleStatus = async (user: AdminUser) => {
-    if (user.email === 'admin@ateliercoffee.com') {
+    if (user.email === 'admin@brewparts.com') {
       showToast('Akun Primary Super Admin tidak dapat dinonaktifkan.', 'error');
       return;
     }
@@ -442,7 +442,7 @@ export default function AdminUsersPage() {
                 </tr>
               ) : (
                 filteredUsers.map((u) => {
-                  const isPrimary = u.email === 'admin@ateliercoffee.com';
+                  const isPrimary = u.email === 'admin@brewparts.com';
                   const isActive = u.isActive !== false;
 
                   return (
@@ -598,7 +598,7 @@ export default function AdminUsersPage() {
                 <input
                   type="email"
                   required
-                  placeholder="staff@ateliercoffee.com"
+                  placeholder="staff@brewparts.com"
                   value={createFormData.email}
                   onChange={(e) => setCreateFormData({ ...createFormData, email: e.target.value })}
                   className="w-full bg-slate-950 border border-slate-700 text-white rounded-lg p-3 focus:outline-none focus:border-amber-400"
@@ -737,7 +737,7 @@ export default function AdminUsersPage() {
                   Peran & Hak Akses (Role)
                 </label>
                 <select
-                  disabled={editingUser.email === 'admin@ateliercoffee.com'}
+                  disabled={editingUser.email === 'admin@brewparts.com'}
                   value={editFormData.role}
                   onChange={(e) => setEditFormData({ ...editFormData, role: e.target.value })}
                   className="w-full bg-slate-950 border border-slate-700 text-white rounded-lg p-3 focus:outline-none focus:border-amber-400 disabled:opacity-60"
@@ -749,12 +749,12 @@ export default function AdminUsersPage() {
                   <option value="CUSTOMER_SERVICE">CUSTOMER SERVICE (Inquiries & Ulasan)</option>
                   <option value="CONTENT_EDITOR">CONTENT EDITOR (Editorial CMS & Promo)</option>
                 </select>
-                {editingUser.email === 'admin@ateliercoffee.com' && (
+                {editingUser.email === 'admin@brewparts.com' && (
                   <p className="text-[10px] text-amber-500/80 mt-1">Role Akun Utama selalu Super Admin.</p>
                 )}
               </div>
 
-              {editingUser.email !== 'admin@ateliercoffee.com' && (
+              {editingUser.email !== 'admin@brewparts.com' && (
                 <div className="pt-2">
                   <label className="flex items-center space-x-3 cursor-pointer">
                     <input

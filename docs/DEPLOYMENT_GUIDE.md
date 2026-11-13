@@ -126,6 +126,6 @@ Untuk menerima pembayaran otomatis (QRIS, BCA Virtual Account, Mandiri, Kartu Kr
 - [ ] Database PostgreSQL Supabase sudah di-push schema (`npx prisma db push`) dan di-seed data mesin (`npx ts-node prisma/seed.ts`).
 - [ ] Backend API di Railway/Render berjalan normal dengan status `200 OK` pada `https://api.yourdomain.com/api/v1/products`.
 - [ ] Vercel Storefront (`apps/web`) terhubung dengan `NEXT_PUBLIC_API_URL` backend production.
-- [ ] Vercel Admin Portal (`apps/admin`) terhubung dan dapat login (`admin@ateliercoffee.com`).
+- [ ] Vercel Admin Portal (`apps/admin`) terhubung dan dapat login (`admin@brewparts.com`).
 - [ ] Webhook Midtrans dan Webhook WhatsApp Meta sudah diarahkan ke URL API domain live Anda.
 - [ ] Uji coba transaksi dummy 1 pesanan mesin kopi hingga status berubah menjadi `PAID`.

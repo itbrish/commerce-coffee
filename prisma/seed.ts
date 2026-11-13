@@ -37,7 +37,7 @@ async function main() {
   const passwordHash = await bcrypt.hash("admin12345", 10);
   await prisma.user.create({
     data: {
-      email: "admin@ateliercoffee.com",
+      email: "admin@brewparts.com",
       passwordHash,
       name: "Marcus Vance",
       role: "SUPER_ADMIN",
@@ -46,7 +46,7 @@ async function main() {
 
   await prisma.user.create({
     data: {
-      email: "sales@ateliercoffee.com",
+      email: "sales@brewparts.com",
       passwordHash,
       name: "Elena Rossi",
       role: "SALES",
