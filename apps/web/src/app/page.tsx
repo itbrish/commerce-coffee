@@ -257,49 +257,6 @@ export default async function HomePage() {
           </Link>
         </div>
       </section>
-
-      {/* 5. EDITORIAL STORY SECTION */}
-      <section className="bg-[#24211E] text-cream-50 py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-center">
-          <div className="space-y-4 sm:space-y-6 order-2 lg:order-1">
-            <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.35em] text-[#B58A63] font-medium">Philosophy of Craft</span>
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-5xl font-normal leading-tight">
-              Bukan Sekadar Mesin,<br />
-              <span className="italic text-[#E8D8C8]">Sebuah Mahakarya Presisi</span>
-            </h2>
-            <p className="text-xs sm:text-sm font-light text-stone-300 leading-relaxed">
-              Di Brewparts, kami percaya bahwa setiap cangkir espresso adalah hasil sinergi antara sains termal, tekanan hidrolik yang terkalibrasi, ketersediaan suku cadang presisi, dan sentuhan jiwa sang barista.
-            </p>
-            <p className="text-xs sm:text-sm font-light text-stone-300 leading-relaxed">
-              Didukung oleh PT Satu Saudara Sedarah dan workshop teknis tersertifikasi, kami menghadirkan mesin komersial, home prosumer, grinder, serta layanan maintenance & spare parts resmi langsung ke bar Anda.
-            </p>
-
-            <div className="pt-2 sm:pt-4">
-              <a
-                href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Brewparts, saya ingin konsultasi pengadaan mesin & maintenance kafe saya.')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-[#25D366] hover:bg-emerald-600 text-white text-xs tracking-widest uppercase font-bold transition-all shadow-lg group"
-              >
-                <div className="w-5 h-5 group-hover:scale-110 transition-transform">
-                  <WhatsAppIcon className="w-5 h-5" color="#ffffff" />
-                </div>
-                <span>Konsultasi Proyek Kafe via WhatsApp</span>
-              </a>
-            </div>
-          </div>
-
-          <div className="relative h-64 sm:h-96 lg:h-[480px] bg-stone-900 border border-stone-700 overflow-hidden order-1 lg:order-2">
-            <Image
-              src="https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1000&auto=format&fit=crop"
-              alt="Artisanal Espresso Preparation"
-              fill
-              className="object-cover"
-              unoptimized
-            />
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
