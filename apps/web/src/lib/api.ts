@@ -1,24 +1,27 @@
 export function getApiUrl(): string {
-  const envUrl = process.env.NEXT_PUBLIC_API_URL;
+  const envUrl = process.env.NEXT_PUBLIC_API_URL?.trim();
 
-  // 1. Utamakan membaca HTTPS URL dari .env (misal: https://services.brewparts.id/api/v1)
-  // atau jika diset ke domain produksi selain localhost default
+  // 1. Utamakan membaca URL produksi/HTTPS dari .env (misal: https://services.brewparts.id/api/v1)
   if (envUrl && (envUrl.startsWith('https://') || !envUrl.includes('localhost'))) {
-    return envUrl;
+    return envUrl.replace(/\/+$/, '');
   }
 
-  // 2. Client-side dynamic host resolution (browser)
+  // 2. Client-side dynamic host resolution (Browser)
   if (typeof window !== 'undefined') {
-    const host = window.location.hostname;
-    const protocol = window.location.protocol;
+    const { hostname, protocol, port } = window.location;
 
-    // Jika halaman dibuka via HTTPS atau berada di domain publik (production)
-    if (protocol === 'https:' || (!host.includes('localhost') && !host.includes('127.0.0.1') && !host.startsWith('192.168.') && !host.startsWith('10.'))) {
-      return envUrl || `${protocol}//${host}/api/v1`;
+    // Jika diakses langsung via port 3000/3001 (localhost, LAN IP, atau IP publik VPS), arahkan ke port 4000 host yang sama
+    if (port === '3000' || port === '3001') {
+      return `${protocol}//${hostname}:4000/api/v1`;
     }
 
-    // Fallback pengujian lokal / LAN Wi-Fi (menghubungkan ke port 4000 host yang sama)
-    return `http://${host}:4000/api/v1`;
+    // Jika diakses via domain brewparts.id (Nginx/Cloudflare SSL reverse proxy), arahkan ke subdomain API
+    if (hostname.endsWith('brewparts.id') && hostname !== 'services.brewparts.id') {
+      return 'https://services.brewparts.id/api/v1';
+    }
+
+    // Fallback domain produksi lainnya tanpa port
+    return `${protocol}//${hostname}/api/v1`;
   }
 
   // 3. Fallback server-side / SSR

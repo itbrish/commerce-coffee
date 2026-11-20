@@ -77,10 +77,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       return { success: true };
     } catch (err: any) {
-      console.error('Login network error:', err);
+      const targetUrl = getApiUrl();
+      console.error('Login network error to', targetUrl, err);
       return {
         success: false,
-        error: 'Gagal terhubung ke server API. Pastikan server backend sedang berjalan.',
+        error: `Gagal terhubung ke server API (${targetUrl}). Pastikan server backend sedang berjalan.`,
       };
     }
   };
